@@ -4,46 +4,115 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Offsetcheck — Keeping the bankers honest.</title>
-<meta name="description" content="Offsetcheck independently verifies your bank's offset-account and home-loan interest calculations. Launching soon.">
+<meta name="description" content="Offsetcheck independently re-calculates the interest on your home loan and the benefit from your offset account — line by line, to the cent.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    min-height:100vh; background:#0C111D; color:#E4E7EC;
-    font-family:"Inter", system-ui, sans-serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    background-image: radial-gradient(circle at 85% 12%, rgba(249,115,22,.16), transparent 55%),
-                      radial-gradient(rgba(255,255,255,.05) 1.5px, transparent 1.5px);
-    background-size: auto, 56px 56px;
-    text-align:center; padding:24px;
-  }
-  .tile { width:96px; height:96px; margin-bottom:28px; }
-  h1 { font-size:clamp(40px, 8vw, 72px); font-weight:700; letter-spacing:-0.02em; color:#fff; }
-  h1 .check { color:#F97316; }
-  .tag { font-family:"JetBrains Mono", monospace; font-weight:500; font-size:clamp(13px, 2.4vw, 17px);
-         color:rgba(255,255,255,.72); margin-top:14px; }
-  .soon { margin-top:56px; font-family:"JetBrains Mono", monospace; font-size:12px; letter-spacing:3px;
-          color:#FBBF24; text-transform:uppercase; }
-  .rule { width:120px; height:1px; background:rgba(255,255,255,.14); margin:20px auto 0; }
-  footer { position:fixed; bottom:20px; width:100%; text-align:center;
-           font-family:"JetBrains Mono", monospace; font-size:11px; color:rgba(255,255,255,.35); letter-spacing:2px; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <svg class="tile" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Offsetcheck logo">
-    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/>
-    </linearGradient></defs>
-    <rect width="96" height="96" rx="22" fill="url(#g)"/>
-    <path d="M20 43 L36 59 L64 27" fill="none" stroke="#fff" stroke-opacity="0.38" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 52 L45 68 L73 36" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <h1>Offset<span class="check">check</span></h1>
-  <p class="tag">Keeping the bankers honest.</p>
-  <p class="soon">Launching soon</p>
-  <div class="rule"></div>
-  <footer>OFFSETCHECK.COM</footer>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top"><img class="logo" src="offsetcheck-logo-horizontal-white.svg" alt="Offsetcheck"></a>
+    <nav class="navlinks">
+      <a class="hideable" href="#how">How it works</a>
+      <a class="hideable" href="#findings">A worked example</a>
+      <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top" style="padding-top:88px">
+  <div class="wrap">
+    <p class="kick">Keeping the bankers honest.</p>
+    <h1>Your bank does the maths.<br>We <em>check</em> it.</h1>
+    <p class="sub">Offsetcheck independently re-calculates the interest charged on your home loan and the benefit credited by your offset account — line by line, to the cent — so you know you're getting everything you're owed.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
+      <a class="btn btn-secondary" href="#findings" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.25)">See a worked example</a>
+    </div>
+    <p class="note">Independent. No bank partnerships, no commissions. The answer is the same whoever asks.</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <span class="secno">01</span>
+    <h2>How it works</h2>
+    <p class="sec-lead">Banks calculate offset benefits inside systems you can't see. Errors are rare, small — and almost never checked. Offsetcheck is the check.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="n">1</span>
+        <h3>Add your loan details</h3>
+        <p>Upload your statements or enter your loan terms. Read-only, encrypted, never shared. We don't touch your money — only your numbers.</p>
+      </div>
+      <div class="step">
+        <span class="n">2</span>
+        <h3>We re-calculate everything</h3>
+        <p>Every day of interest, every offset credit, re-computed from your actual rate, balance and offset activity. The same rules the bank uses — applied independently.</p>
+      </div>
+      <div class="step">
+        <span class="n">3</span>
+        <h3>You get a verdict</h3>
+        <p>Verified, Review, or Overcharge — with the working shown, line by line. If you're owed money, you get the exact figure and the evidence to claim it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="findings" id="findings">
+  <div class="wrap">
+    <span class="secno">02</span>
+    <h2>A worked example</h2>
+    <p class="sec-lead">This is what a check looks like. Two figures, laid side by side — and the difference, to the cent.</p>
+    <div class="card">
+      <span class="chip">Overcharge found</span>
+      <div class="big-figure">$412.07</div>
+      <div class="big-label">Offset benefit short-changed over 14 months</div>
+      <div class="ledger">
+        <div class="row"><span>Offset benefit, bank's figure</span><span>$4,212.00</span></div>
+        <div class="row"><span>Offset benefit, verified</span><span>$3,799.93</span></div>
+        <div class="row diff"><span>Discrepancy</span><span>$412.07</span></div>
+      </div>
+      <details>
+        <summary>Show the working</summary>
+        <div class="working">Daily offset credit = offset balance × (rate ÷ 365)
+
+2025-07-01  offset $48,205.11 × 6.19%/365 = $8.17   bank: $7.98   Δ $0.19
+2025-07-02  offset $48,205.11 × 6.19%/365 = $8.17   bank: $7.98   Δ $0.19
+2025-07-03  offset $31,440.02 × 6.19%/365 = $5.33   bank: $5.33   Δ $0.00
+   …        428 days checked · 61 days with discrepancies
+────────────────────────────────────────────────────
+Total discrepancy: $412.07 in the bank's favour</div>
+      </details>
+      <p class="example-note">Illustrative figures. Your check uses your statements, your rate, your balances.</p>
+    </div>
+  </div>
+</section>
+
+<section class="waitlist" id="waitlist">
+  <div class="wrap">
+    <div class="panel">
+      <span class="secno">03</span>
+      <h2>Know your number.</h2>
+      <p class="sec-lead" style="margin:0 auto">Offsetcheck is launching soon. Join the waitlist and be first to find out — to the cent — whether your bank's maths holds up.</p>
+      <form action="mailto:waitlist@offsetcheck.com" method="post" enctype="text/plain">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+        <button class="btn btn-primary" type="submit">Notify me</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <img class="logo" src="offsetcheck-logo-horizontal-white.svg" alt="Offsetcheck">
+    <span class="tagline">Keeping the bankers honest.</span>
+    <span class="fine">© 2026 OFFSETCHECK · OFFSETCHECK.COM</span>
+  </div>
+</footer>
+
 </body>
 </html>
