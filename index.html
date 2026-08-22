@@ -6,6 +6,18 @@
 <title>Offsetcheck — Keeping the bankers honest.</title>
 <meta name="description" content="Offsetcheck independently re-calculates the interest on your home loan and the benefit from your offset account — line by line, to the cent.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YQVM2K0Z66"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments) }
+  gtag('js', new Date());
+  gtag('config', 'G-YQVM2K0Z66');
+  // Fire a product event only when analytics is live.
+  function trackEvent(name, params) {
+    if (window.dataLayer) gtag('event', name, params || {})
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -827,6 +839,7 @@ function handleFiles(files) {
   });
   ingestQueue = ingestQueue.then(() => {
     const extracted = state.transactions.length - txBefore;
+    trackEvent('statement_ingested', { statements: total, transactions_extracted: extracted, accounts: state.accounts.length });
     showToast('Ingested ' + total + (total === 1 ? ' statement' : ' statements') + ' — ' + extracted + ' transactions extracted', 'success');
     setTimeout(() => $('#uploadProgress').classList.add('hidden'), 3000);
     renderLinkagePanel()
@@ -1154,6 +1167,7 @@ document.addEventListener('click', e => {
   }
 }); // ============ DEMO DATA ============
 $('#loadDemoBtn').addEventListener('click', () => {
+  trackEvent('demo_loaded');
   state.loanBalance = DEMO_DATA.loanBalance;
   state.interestRate = DEMO_DATA.interestRate;
   state.startDate = DEMO_DATA.startDate;
@@ -1328,6 +1342,13 @@ function runCalculation() {
   }
   state.difference = state.expectedOffset - state.actualOffset;
   state.discrepancyPct = state.expectedOffset > 0 ? (state.difference / state.expectedOffset * 100) : 0;
+  trackEvent('calculation_run', {
+    days: days,
+    transactions: state.transactions.length,
+    accounts: Object.keys(accountDaily).length,
+    expected_offset: Math.round(state.expectedOffset * 100) / 100,
+    discrepancy_pct: Math.round(state.discrepancyPct * 100) / 100
+  });
   renderResults(dailyOffsets);
 }
 
@@ -1381,6 +1402,7 @@ function renderResults(dailyOffsets) {
     banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-red-500/10 border border-red-500/30';
     icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-red-500/20';
     icon.innerHTML = '<svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+    trackEvent('discrepancy_detected', { difference: Math.round(Math.abs(state.difference) * 100) / 100 });
     title.textContent = 'Significant Discrepancy Detected';
     title.className = 'font-semibold text-red-400';
     desc.textContent = 'Your lender underpaid you by ' + fmtMoney(Math.abs(state.difference)) + '. We recommend generating a letter of demand.';
@@ -1581,6 +1603,7 @@ function generateLetterPreview() {
   if (el) el.addEventListener('input', generateLetterPreview)
 });
 $('#downloadLetter').addEventListener('click', async () => {
+  trackEvent('letter_downloaded', { difference: Math.round(Math.abs(state.difference) * 100) / 100 });
   const {
     jsPDF
   } = window.jspdf;
@@ -1610,6 +1633,7 @@ $('#downloadLetter').addEventListener('click', async () => {
   }
 }); // ============ EXPORT ============
 $('#exportResults').addEventListener('click', () => {
+  trackEvent('results_exported');
   let csv = 'Date,Offset Balance,Daily Interest Saved,Cumulative Offset,Status\n';
   Object.entries(state.dailyBalances).forEach(([date, balance]) => {
     const dailyRate = state.interestRate / 100 / 365;
