@@ -1,0 +1,44 @@
+{
+  "id": "D3-missing-transaction-pdf",
+  "scenario": "Deposit omitted from statement",
+  "file": "D3-missing-transaction.pdf",
+  "layout": "pdf",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 466.93
+  },
+  "expected": {
+    "transactionCount": 107,
+    "interestTxCount": 3,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 7384.92,
+    "openingBalance": 21450.0,
+    "closingBalance": 35203.12,
+    "expectedOffset": 424.39,
+    "actualOffset": 466.93,
+    "difference": -42.54,
+    "discrepancyPct": -10.02,
+    "finding": "Review",
+    "letterOfDemand": null
+  },
+  "faults": [
+    {
+      "type": "missing_transaction",
+      "date": "2026-03-30",
+      "desc": "SALARY HAYMARKET DESIGN PTY",
+      "amount": 4250.0
+    }
+  ],
+  "notes": "Deposit of $4,250.00 on 30/03/2026 omitted. Rebuilt closing balance must break by exactly that amount."
+}

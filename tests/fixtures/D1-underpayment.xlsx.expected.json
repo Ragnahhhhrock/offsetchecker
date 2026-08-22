@@ -1,0 +1,49 @@
+{
+  "id": "D1-underpayment-xlsx",
+  "scenario": "Underpayment 8% (Overcharge)",
+  "file": "D1-underpayment.xlsx",
+  "layout": "simple",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 479.17
+  },
+  "expected": {
+    "transactionCount": 88,
+    "interestTxCount": 3,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 7384.92,
+    "openingBalance": 21450.0,
+    "closingBalance": 47534.24,
+    "expectedOffset": 520.84,
+    "actualOffset": 479.17,
+    "difference": 41.67,
+    "discrepancyPct": 8.0,
+    "finding": "Overcharge",
+    "letterOfDemand": {
+      "expectedOffset": 520.84,
+      "actualOffset": 479.17,
+      "shortfall": 41.67,
+      "rate": 5.99,
+      "periodStart": "2026-03-01",
+      "periodEnd": "2026-05-29"
+    }
+  },
+  "faults": [
+    {
+      "type": "underpayment",
+      "factor": 0.92
+    }
+  ],
+  "notes": "Bank credits 92% of the expected offset benefit; letter of demand must carry the exact shortfall."
+}

@@ -1,0 +1,37 @@
+{
+  "id": "D0-clean-pdf",
+  "scenario": "Clean control (Verified)",
+  "file": "D0-clean.pdf",
+  "layout": "pdf",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 497.46
+  },
+  "expected": {
+    "transactionCount": 93,
+    "interestTxCount": 3,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 7384.92,
+    "openingBalance": 21450.0,
+    "closingBalance": 43699.74,
+    "expectedOffset": 497.46,
+    "actualOffset": 497.46,
+    "difference": 0.0,
+    "discrepancyPct": 0.0,
+    "finding": "Verified",
+    "letterOfDemand": null
+  },
+  "faults": [],
+  "notes": "Actual offset credit equals expected exactly."
+}

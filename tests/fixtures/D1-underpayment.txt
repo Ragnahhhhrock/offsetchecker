@@ -1,0 +1,98 @@
+MERIDIAN MUTUAL BANK
+OFFSET ACCOUNT STATEMENT
+Account: 062-001 8834 2210
+Period: 01/03/2026 - 29/05/2026
+Opening balance: $21,450.00
+
+01/03/2026  CHEMIST WAREHOUSE 3310                   DR 52.87   bal    21,397.13
+02/03/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    25,647.13
+02/03/2026  BP PETROL 5821                          DR 228.67   bal    25,418.46
+02/03/2026  SPOTLIGHT 0208                          DR 167.16   bal    25,251.30
+03/03/2026  TRANSFER FROM SAVINGS                   CR 526.07   bal    25,777.37
+04/03/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+05/03/2026  BUNNINGS 4180                            DR 32.95   bal    25,744.42
+08/03/2026  BP PETROL 5821                           DR 39.59   bal    25,704.83
+08/03/2026  BP PETROL 5821                          DR 209.23   bal    25,495.60
+10/03/2026  BP PETROL 5821                          DR 305.73   bal    25,189.87
+13/03/2026  BP PETROL 5821                          DR 158.60   bal    25,031.27
+14/03/2026  REFUND AGL ENERGY                       CR 652.33   bal    25,683.60
+15/03/2026  BP PETROL 5821                           DR 33.90   bal    25,649.70
+15/03/2026  CHEMIST WAREHOUSE 3310                   DR 11.19   bal    25,638.51
+16/03/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    29,888.51
+16/03/2026  KMART 1155                              DR 155.34   bal    29,733.17
+18/03/2026  INTEREST PAID                           CR 168.98   bal    29,902.15
+18/03/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+19/03/2026  UBER TRIP                               DR 137.19   bal    29,764.96
+19/03/2026  KMART 1155                              DR 111.94   bal    29,653.02
+20/03/2026  MEDICARE REBATE                         CR 480.10   bal    30,133.12
+21/03/2026  AGL ENERGY 88412093                     DR 194.45   bal    29,938.67
+23/03/2026  BP PETROL 5821                           DR 17.76   bal    29,920.91
+30/03/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    34,170.91
+30/03/2026  INTEREST CHARGED                      DR 2,461.64
+30/03/2026  BP PETROL 5821                          DR 216.56   bal    33,954.35
+01/04/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+01/04/2026  OFFICEWORKS 0242                        DR 201.02   bal    33,753.33
+01/04/2026  UBER TRIP                               DR 264.82   bal    33,488.51
+02/04/2026  BP PETROL 5821                           DR 80.68   bal    33,407.83
+02/04/2026  TELSTRA MOBILE 0441                     DR 197.39   bal    33,210.44
+03/04/2026  INTEREST PAID                           CR 141.81   bal    33,352.25
+03/04/2026  BUNNINGS 4180                           DR 253.77   bal    33,098.48
+05/04/2026  TRANSPORT NSW OPAL                       DR 48.39   bal    33,050.09
+06/04/2026  BUNNINGS 4180                           DR 138.35   bal    32,911.74
+08/04/2026  UBER TRIP                                DR 84.98   bal    32,826.76
+08/04/2026  TRANSPORT NSW OPAL                      DR 299.85   bal    32,526.91
+09/04/2026  CHEMIST WAREHOUSE 3310                  DR 141.48   bal    32,385.43
+10/04/2026  NETFLIX.COM 866-579                     DR 144.72   bal    32,240.71
+11/04/2026  MEDICARE REBATE                         CR 544.59   bal    32,785.30
+13/04/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    37,035.30
+13/04/2026  WOOLWORTHS 2432 MARRICKVILLE            DR 271.71   bal    36,763.59
+14/04/2026  COLES 0881 DULWICH HILL                 DR 145.74   bal    36,617.85
+15/04/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+16/04/2026  DEPOSIT BRANCH 0621                     CR 591.97   bal    37,209.82
+16/04/2026  BUNNINGS 4180                           DR 262.59   bal    36,947.23
+18/04/2026  AMPOL FOODARY 2291                       DR 27.04   bal    36,920.19
+19/04/2026  CHEMIST WAREHOUSE 3310                  DR 284.92   bal    36,635.27
+20/04/2026  AMPOL FOODARY 2291                      DR 128.14   bal    36,507.13
+20/04/2026  NETFLIX.COM 866-579                      DR 92.52   bal    36,414.61
+22/04/2026  BUNNINGS 4180                            DR 16.95   bal    36,397.66
+24/04/2026  TELSTRA MOBILE 0441                     DR 198.45   bal    36,199.21
+24/04/2026  BUNNINGS 4180                           DR 269.38   bal    35,929.83
+25/04/2026  COLES 0881 DULWICH HILL                  DR 17.55   bal    35,912.28
+25/04/2026  OFFICEWORKS 0242                        DR 119.10   bal    35,793.18
+26/04/2026  NETFLIX.COM 866-579                     DR 313.89   bal    35,479.29
+27/04/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    39,729.29
+27/04/2026  COLES 0881 DULWICH HILL                 DR 263.27   bal    39,466.02
+29/04/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+29/04/2026  INTEREST CHARGED                      DR 2,461.64
+29/04/2026  TRANSPORT NSW OPAL                      DR 279.60   bal    39,186.42
+30/04/2026  REFUND AGL ENERGY                       CR 602.15   bal    39,788.57
+04/05/2026  AMPOL FOODARY 2291                      DR 275.23   bal    39,513.34
+04/05/2026  AMPOL FOODARY 2291                      DR 103.52   bal    39,409.82
+05/05/2026  WOOLWORTHS 2432 MARRICKVILLE            DR 228.43   bal    39,181.39
+07/05/2026  OFFICEWORKS 0242                        DR 173.94   bal    39,007.45
+08/05/2026  ALD I STORES 4412                        DR 31.84   bal    38,975.61
+10/05/2026  ORIGIN ENERGY GAS                       DR 165.56   bal    38,810.05
+11/05/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    43,060.05
+11/05/2026  DEPOSIT BRANCH 0621                     CR 896.11   bal    43,956.16
+11/05/2026  CHEMIST WAREHOUSE 3310                   DR 90.46   bal    43,865.70
+13/05/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+14/05/2026  ORIGIN ENERGY GAS                       DR 301.37   bal    43,564.33
+16/05/2026  INTEREST PAID                           CR 790.87   bal    44,355.20
+16/05/2026  OFFICEWORKS 0242                        DR 116.24   bal    44,238.96
+16/05/2026  UBER TRIP                                DR 47.43   bal    44,191.53
+19/05/2026  KMART 1155                               DR 18.28   bal    44,173.25
+20/05/2026  BUNNINGS 4180                            DR 18.56   bal    44,154.69
+21/05/2026  AGL ENERGY 88412093                     DR 201.79   bal    43,952.90
+23/05/2026  ALD I STORES 4412                       DR 152.33   bal    43,800.57
+23/05/2026  AGL ENERGY 88412093                      DR 14.64   bal    43,785.93
+24/05/2026  AGL ENERGY 88412093                      DR 59.34   bal    43,726.59
+25/05/2026  SALARY HAYMARKET DESIGN PTY           CR 4,250.00   bal    47,976.59
+25/05/2026  TRANSPORT NSW OPAL                      DR 199.53   bal    47,777.06
+27/05/2026  LOAN REPAYMENT 552018                 DR 2,850.00
+27/05/2026  AMPOL FOODARY 2291                       DR 51.14   bal    47,725.92
+28/05/2026  WOOLWORTHS 2432 MARRICKVILLE            DR 191.68   bal    47,534.24
+29/05/2026  INTEREST CHARGED                      DR 2,461.64
+
+Closing balance: $47,534.24
+Total interest charged: $7,384.92
+Offset benefit credited: $479.17

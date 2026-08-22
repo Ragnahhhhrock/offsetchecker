@@ -1,0 +1,38 @@
+{
+  "id": "D5-offset-cap-pdf",
+  "scenario": "Offset balance above loan balance (capped)",
+  "file": "D5-offset-cap.pdf",
+  "layout": "pdf",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 6605.12
+  },
+  "expected": {
+    "transactionCount": 102,
+    "interestTxCount": 3,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 7384.92,
+    "openingBalance": 21450.0,
+    "closingBalance": 660129.46,
+    "expectedOffset": 6605.12,
+    "actualOffset": 6605.12,
+    "difference": 0.0,
+    "discrepancyPct": 0.0,
+    "finding": "Verified",
+    "letterOfDemand": null,
+    "cappedDays": 80
+  },
+  "faults": [],
+  "notes": "$620,000 credit on day 10 pushes the offset balance above the $500,000 loan for 80 days. Benefit must be capped at the amount owing."
+}

@@ -1,0 +1,44 @@
+{
+  "id": "D2-wrong-rate-pdf",
+  "scenario": "Interest charged at 6.49% vs 5.99%",
+  "file": "D2-wrong-rate.pdf",
+  "layout": "pdf",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 478.18
+  },
+  "expected": {
+    "transactionCount": 104,
+    "interestTxCount": 3,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 8001.36,
+    "openingBalance": 21450.0,
+    "closingBalance": 42024.48,
+    "expectedOffset": 478.18,
+    "actualOffset": 478.18,
+    "difference": 0.0,
+    "discrepancyPct": 0.0,
+    "finding": "Review",
+    "letterOfDemand": null
+  },
+  "faults": [
+    {
+      "type": "wrong_rate",
+      "charged": 6.49,
+      "entered": 5.99,
+      "excess_interest": 616.44
+    }
+  ],
+  "notes": "Offset credit is correct, but the three interest charges are calculated at 6.49% p.a. Tool must flag excess interest of the manifest amount."
+}

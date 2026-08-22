@@ -1,0 +1,42 @@
+{
+  "id": "D6-leap-year",
+  "scenario": "Leap-year divisor (bank used 366)",
+  "file": "D6-leap-year.csv",
+  "layout": "simple",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2028-01-15",
+    "end": "2028-04-13",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 466.98
+  },
+  "expected": {
+    "transactionCount": 85,
+    "interestTxCount": 3,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 7384.92,
+    "openingBalance": 21450.0,
+    "closingBalance": 40962.8,
+    "expectedOffset": 468.26,
+    "actualOffset": 466.98,
+    "difference": 1.28,
+    "discrepancyPct": 0.27,
+    "finding": "Review",
+    "letterOfDemand": null
+  },
+  "faults": [
+    {
+      "type": "leap_year_divisor",
+      "bank_divisor": 366
+    }
+  ],
+  "notes": "Period spans Feb 2028. Bank credited using a 366-day divisor; expected uses 365. Small systematic shortfall -> Review tier."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "R6-multi-account",
+  "scenario": "Two accounts, one linked 45 days",
+  "file": "R6-multi-account.csv",
+  "layout": "multi-account",
+  "bank": {
+    "name": "Coastline Credit Union",
+    "bsb": "802-144",
+    "account": "5510 0973"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 532.53
+  },
+  "expected": {
+    "transactionCount": 194,
+    "expectedOffset": 532.53,
+    "actualOffset": 532.53,
+    "difference": 0.0,
+    "discrepancyPct": 0.0,
+    "finding": "Verified",
+    "letterOfDemand": null
+  },
+  "faults": [],
+  "notes": "Savings account must be date-limited to the first 45 days (or unticked). Only the linked balance offsets interest on a given day."
+}

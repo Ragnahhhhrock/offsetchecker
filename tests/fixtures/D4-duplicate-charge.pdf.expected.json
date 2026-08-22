@@ -1,0 +1,44 @@
+{
+  "id": "D4-duplicate-charge-pdf",
+  "scenario": "Interest charge duplicated",
+  "file": "D4-duplicate-charge.pdf",
+  "layout": "pdf",
+  "bank": {
+    "name": "Meridian Mutual Bank",
+    "bsb": "062-001",
+    "account": "8834 2210"
+  },
+  "period": {
+    "start": "2026-03-01",
+    "end": "2026-05-29",
+    "days": 90
+  },
+  "inputs": {
+    "interestRate": 5.99,
+    "loanBalance": 500000.0,
+    "actualOffsetCredited": 465.74
+  },
+  "expected": {
+    "transactionCount": 98,
+    "interestTxCount": 4,
+    "mortgageTxCount": 7,
+    "totalInterestPaid": 9846.56,
+    "openingBalance": 21450.0,
+    "closingBalance": 41713.14,
+    "expectedOffset": 465.74,
+    "actualOffset": 465.74,
+    "difference": 0.0,
+    "discrepancyPct": 0.0,
+    "finding": "Review",
+    "letterOfDemand": null
+  },
+  "faults": [
+    {
+      "type": "duplicate_transaction",
+      "date": "2026-03-30",
+      "desc": "INTEREST CHARGED",
+      "amount": -2461.64
+    }
+  ],
+  "notes": "Statement contains one interest charge twice; the bank summary line still shows the true total. Tool must surface the count/total mismatch."
+}
