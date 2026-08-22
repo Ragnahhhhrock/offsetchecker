@@ -214,8 +214,9 @@ tailwind.config = {
         <div id="fileList" class="mt-6 space-y-2 hidden"></div>
         <div class="mt-6 grid sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm text-ink-400 mb-2">Loan Balance ($)</label>
+            <label class="block text-sm text-ink-400 mb-2">Current Loan Balance ($)</label>
             <input type="number" id="uploadLoanBalance" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" placeholder="500000" value="500000">
+            <p class="text-xs text-ink-600 mt-1">The amount still owing at the start of the period — not the original loan amount.</p>
           </div>
           <div>
             <label class="block text-sm text-ink-400 mb-2">Interest Rate (% p.a.)</label>
@@ -232,8 +233,9 @@ tailwind.config = {
         <h3 class="text-lg font-bold text-white mb-6">Loan details</h3>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div>
-            <label class="block text-sm text-ink-400 mb-2">Loan Balance ($)</label>
+            <label class="block text-sm text-ink-400 mb-2">Current Loan Balance ($)</label>
             <input type="number" id="loanBalance" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" placeholder="500000" value="500000">
+            <p class="text-xs text-ink-600 mt-1">The amount still owing at the start of the period — not the original loan amount. Offset benefit is capped at this figure.</p>
           </div>
           <div>
             <label class="block text-sm text-ink-400 mb-2">Interest Rate (% p.a.)</label>
@@ -1181,7 +1183,11 @@ function runCalculation() {
       }
     });
     dailyBalances[date] = currentBalance;
-    const dailyOffset = currentBalance * dailyRate;
+    // Offset benefit can never exceed the interest on the amount still owing:
+    // cap at the current loan balance, and floor at zero on negative days.
+    const cap = state.loanBalance > 0 ? state.loanBalance : Infinity;
+    const effectiveBalance = Math.min(Math.max(currentBalance, 0), cap);
+    const dailyOffset = effectiveBalance * dailyRate;
     dailyOffsets.push({
       date,
       balance: currentBalance,
