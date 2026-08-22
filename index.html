@@ -212,6 +212,11 @@ tailwind.config = {
           <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
         </div>
         <div id="fileList" class="mt-6 space-y-2 hidden"></div>
+        <div id="linkagePanel" class="hidden mt-6">
+          <h4 class="text-sm font-semibold text-ink-300 mb-2">Offset account linkage</h4>
+          <p class="text-xs text-ink-600 mb-3" id="linkageHint"></p>
+          <div id="linkageRows" class="space-y-2"></div>
+        </div>
         <div class="mt-6 grid sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm text-ink-400 mb-2">Current Loan Balance ($)</label>
@@ -413,6 +418,7 @@ tailwind.config = {
                 <tr>
                   <th class="text-left py-3 px-4 text-ink-500 font-medium">Date</th>
                   <th class="text-left py-3 px-4 text-ink-500 font-medium">Description</th>
+                  <th class="text-left py-3 px-4 text-ink-500 font-medium">Account</th>
                   <th class="text-right py-3 px-4 text-ink-500 font-medium">Amount</th>
                   <th class="text-center py-3 px-4 text-ink-500 font-medium">Category</th>
                 </tr>
@@ -595,7 +601,9 @@ const state = {
     totalOffsetBenefit: 0,
     mortgageTxCount: 0,
     interestTxCount: 0,
-    offsetTxCount: 0
+    offsetTxCount: 0,
+    accounts: [],
+    linkage: {}
   };
 const DEMO_DATA = {
   loanBalance: 500000,
@@ -807,7 +815,11 @@ function handleFiles(files) {
   batch.forEach(({ file, ext }) => {
     ingestQueue = ingestQueue.then(() => {
       updateIngestProgress(done, total, file.name);
+      const txMark = state.transactions.length;
+      statementAccountHint = null;
       return processFile(file, ext).then(() => {
+        const acct = registerAccount(statementAccountHint || null);
+        for (let i = txMark; i < state.transactions.length; i++) state.transactions[i].account = acct;
         done++;
         updateIngestProgress(done, total, file.name)
       })
@@ -816,8 +828,41 @@ function handleFiles(files) {
   ingestQueue = ingestQueue.then(() => {
     const extracted = state.transactions.length - txBefore;
     showToast('Ingested ' + total + (total === 1 ? ' statement' : ' statements') + ' — ' + extracted + ' transactions extracted', 'success');
-    setTimeout(() => $('#uploadProgress').classList.add('hidden'), 3000)
+    setTimeout(() => $('#uploadProgress').classList.add('hidden'), 3000);
+    renderLinkagePanel()
   })
+}
+
+// After ingestion, show one row per detected offset account so the user can
+// say which account was linked to the mortgage, and between which dates.
+// An empty from/to means "linked for the whole statement period".
+function renderLinkagePanel() {
+  const panel = $('#linkagePanel');
+  const rows = $('#linkageRows');
+  if (!panel) return;
+  if (!state.accounts.length) {
+    panel.classList.add('hidden');
+    return
+  }
+  panel.classList.remove('hidden');
+  rows.innerHTML = '';
+  state.accounts.forEach(acct => {
+    const link = state.linkage[acct.name];
+    const txCount = state.transactions.filter(t => t.account === acct.name).length;
+    const row = document.createElement('div');
+    row.className = 'flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-ink-900 rounded-xl border border-ink-800';
+    row.innerHTML = '<div class="flex-1 min-w-0"><p class="mono text-sm text-white truncate">' + acct.name + '</p><p class="text-xs text-ink-600">' + txCount + ' transactions</p></div>' +
+      '<label class="flex items-center gap-2 text-sm text-ink-300 cursor-pointer"><input type="checkbox" class="linkage-linked w-4 h-4 accent-brand-500" ' + (link.linked ? 'checked' : '') + '> Linked to this mortgage</label>' +
+      '<div class="flex items-center gap-2 text-xs text-ink-500"><span>from</span><input type="date" class="linkage-from px-2 py-1.5 bg-ink-950 border border-ink-700 rounded-lg text-white font-mono text-xs" value="' + link.from + '"><span>to</span><input type="date" class="linkage-to px-2 py-1.5 bg-ink-950 border border-ink-700 rounded-lg text-white font-mono text-xs" value="' + link.to + '"></div>';
+    row.querySelector('.linkage-linked').addEventListener('change', e => { link.linked = e.target.checked });
+    row.querySelector('.linkage-from').addEventListener('change', e => { link.from = e.target.value });
+    row.querySelector('.linkage-to').addEventListener('change', e => { link.to = e.target.value });
+    rows.appendChild(row)
+  });
+  const multi = state.accounts.length > 1;
+  $('#linkageHint').textContent = multi
+    ? 'Multiple accounts detected. Untick or date-limit any account that was not linked to the mortgage for the whole period — only the linked account offsets interest on a given day.'
+    : 'One account detected, linked for the whole period. Upload statements from a second offset account and linkage rows will appear here.'
 }
 
 function processFile(file, ext) {
@@ -1012,8 +1057,41 @@ function parseText(file) {
 // Tracks date+amount+desc so re-uploading the same statement period does
 // not double-count transactions.
 const seenTransactions = new Set();
+// Set by extractTransactionsFromText when a statement header reveals an
+// account number; consumed by the ingest queue to tag that file's rows.
+let statementAccountHint = null;
+
+// An offset account only reduces interest while it is LINKED to the loan.
+// Each ingested file is tagged with an account; the user sets the linkage
+// window per account. Accounts are keyed by detected account number, or by
+// upload order when the statement does not show one.
+function registerAccount(hint) {
+  if (hint) {
+    const existing = state.accounts.find(a => a.hint === hint);
+    if (existing) return existing.name;
+    const name = 'Offset account ' + (state.accounts.length + 1) + ' (···' + hint.slice(-4) + ')';
+    state.accounts.push({ name, hint });
+    state.linkage[name] = { linked: true, from: '', to: '' };
+    return name
+  }
+  if (state.accounts.length === 1 && !state.accounts[0].hint) return state.accounts[0].name;
+  const name = 'Offset account ' + (state.accounts.length + 1);
+  state.accounts.push({ name, hint: null });
+  state.linkage[name] = { linked: true, from: '', to: '' };
+  return name
+}
+
+function detectAccountNumber(text) {
+  const head = text.slice(0, 3000);
+  const m = head.match(/account\s*(?:number|no\.?|#)?\s*[:\-]?\s*(\d[\d\s\-]{4,}\d)/i);
+  if (m) return m[1].replace(/[\s-]/g, '');
+  const b = head.match(/BSB\s*[:\-]?\s*(\d{3}[\s\-]?\d{3})/i);
+  if (b) return 'bsb-' + b[1].replace(/[\s-]/g, '');
+  return null
+}
 
 function extractTransactionsFromText(text) {
+  if (statementAccountHint === null) statementAccountHint = detectAccountNumber(text) || undefined;
   const lines = text.split(/[\r\n]+/).filter(l => l.trim());
   const datePattern = /(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})/g;
   const amountPattern = /\$?\s*(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+(?:\.\d{2})?)\s*(CR|DR|Cr|Dr|cr|dr|CREDIT|DEBIT|credit|debit)?/g;
@@ -1102,6 +1180,11 @@ $('#resetBtn').addEventListener('click', () => {
   state.transactions = [];
   state.statements = [];
   state.statementsProcessed = 0;
+  state.accounts = [];
+  state.linkage = {};
+  seenFiles.clear();
+  seenTransactions.clear();
+  renderLinkagePanel();
   $('#fileList').innerHTML = '';
   $('#fileList').classList.add('hidden');
   $('#resultsSection').classList.add('hidden');
@@ -1166,31 +1249,68 @@ function runCalculation() {
   state.transactions.sort((a, b) => a.date.localeCompare(b.date));
   const days = daysBetween(state.startDate, state.endDate);
   const dailyRate = state.interestRate / 100 / 365;
-  let currentBalance = 0;
+  // Bucket offset activity by account. Transactions with no account tag
+  // (manual entry, demo data) share a single implicit account that is always
+  // linked for the full period.
+  const DEFAULT_ACCOUNT = 'Offset account 1';
+  const accountTx = {};
+  offsetTx.forEach(tx => {
+    const a = tx.account || DEFAULT_ACCOUNT;
+    (accountTx[a] = accountTx[a] || []).push(tx)
+  });
+  Object.keys(accountTx).forEach(a => {
+    if (!state.accounts.find(x => x.name === a)) {
+      state.accounts.push({ name: a, hint: null });
+      state.linkage[a] = { linked: true, from: '', to: '' }
+    }
+  });
+  // Pre-compute each account's own daily balance (carry-forward, with the
+  // first credit treated as the opening balance).
+  const accountDaily = {};
+  Object.entries(accountTx).forEach(([acct, txs]) => {
+    const series = {};
+    let bal = 0;
+    let first = true;
+    for (let i = 0; i < days; i++) {
+      const date = addDays(state.startDate, i);
+      txs.filter(t => t.date === date).forEach(tx => {
+        if (first && tx.type === 'credit') {
+          bal = tx.amount;
+          first = false
+        } else {
+          if (tx.type === 'credit') bal += tx.amount;
+          else bal -= tx.amount
+        }
+      });
+      series[date] = bal
+    }
+    accountDaily[acct] = series
+  });
+  // A balance only offsets interest on days its account is linked to the loan.
+  function linkedOn(acct, date) {
+    const link = state.linkage[acct];
+    if (!link || !link.linked) return false;
+    if (link.from && date < link.from) return false;
+    if (link.to && date > link.to) return false;
+    return true
+  }
   const dailyBalances = {};
   const dailyOffsets = [];
-  let firstTx = true;
   for (let i = 0; i < days; i++) {
     const date = addDays(state.startDate, i);
-    const dayTx = offsetTx.filter(t => t.date === date);
-    dayTx.forEach(tx => {
-      if (firstTx && tx.type === 'credit') {
-        currentBalance = tx.amount;
-        firstTx = false
-      } else {
-        if (tx.type === 'credit') currentBalance += tx.amount;
-        else currentBalance -= tx.amount
-      }
+    let linkedBalance = 0;
+    Object.keys(accountDaily).forEach(acct => {
+      if (linkedOn(acct, date)) linkedBalance += accountDaily[acct][date]
     });
-    dailyBalances[date] = currentBalance;
+    dailyBalances[date] = linkedBalance;
     // Offset benefit can never exceed the interest on the amount still owing:
     // cap at the current loan balance, and floor at zero on negative days.
     const cap = state.loanBalance > 0 ? state.loanBalance : Infinity;
-    const effectiveBalance = Math.min(Math.max(currentBalance, 0), cap);
+    const effectiveBalance = Math.min(Math.max(linkedBalance, 0), cap);
     const dailyOffset = effectiveBalance * dailyRate;
     dailyOffsets.push({
       date,
-      balance: currentBalance,
+      balance: linkedBalance,
       dailyOffset,
       cumulative: 0
     })
@@ -1241,7 +1361,7 @@ function renderResults(dailyOffsets) {
     const tr = document.createElement('tr');
     tr.className = 'border-b border-ink-800/30 hover:bg-ink-800/30 transition-colors';
     const chip = '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-mono uppercase ' + catStyles[tx.category] + '">' + categoryLabel(tx.category) + '</span>';
-    tr.innerHTML = '<td class="py-2 px-4 font-mono text-sm text-ink-300 whitespace-nowrap">' + tx.date + '</td><td class="py-2 px-4 text-sm text-white">' + tx.desc + '</td><td class="py-2 px-4 text-right font-mono text-sm ' + (tx.type === 'debit' ? 'text-red-400' : 'text-green-400') + '">' + (tx.type === 'debit' ? '-' : '+') + fmtMoney(tx.amount) + '</td><td class="py-2 px-4 text-center">' + chip + '</td>';
+    tr.innerHTML = '<td class="py-2 px-4 font-mono text-sm text-ink-300 whitespace-nowrap">' + tx.date + '</td><td class="py-2 px-4 text-sm text-white">' + tx.desc + '</td><td class="py-2 px-4 font-mono text-xs text-ink-500 whitespace-nowrap">' + (tx.account || '—') + '</td><td class="py-2 px-4 text-right font-mono text-sm ' + (tx.type === 'debit' ? 'text-red-400' : 'text-green-400') + '">' + (tx.type === 'debit' ? '-' : '+') + fmtMoney(tx.amount) + '</td><td class="py-2 px-4 text-center">' + chip + '</td>';
     ctbody.appendChild(tr)
   });
   $('#classCount').textContent = state.transactions.length + ' transactions';
