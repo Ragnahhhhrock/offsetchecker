@@ -147,8 +147,8 @@ tailwind.config = {
         Upload your mortgage and offset statements. We re-calculate every day's interest and offset benefit — line by line, to the cent — and show you the difference.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
-        <a href="check.html" class="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
-        <a href="#how-it-works" class="px-8 py-4 bg-ink-900 hover:bg-ink-800 text-ink-300 font-semibold rounded-xl border border-ink-700 transition-colors">See how it works</a>
+        <a href="check.html" data-cta="hero_primary" class="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
+        <a href="#how-it-works" data-cta="hero_secondary" class="px-8 py-4 bg-ink-900 hover:bg-ink-800 text-ink-300 font-semibold rounded-xl border border-ink-700 transition-colors">See how it works</a>
       </div>
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
         <div class="glass rounded-2xl p-5">
@@ -213,7 +213,7 @@ tailwind.config = {
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">The harm is hidden. The maths is not.</h2>
         <p class="text-ink-400 leading-relaxed mb-4">In July 2026, the corporate regulator ASIC reported that Australian banks had paid more than <span class="text-white font-semibold">$55 million</span> in compensation for mortgage offset failures — accounts never opened, never linked, or quietly linked to the wrong loan. Most customers never noticed: the repayment stays the same while the interest silently rises.</p>
         <p class="text-ink-400 leading-relaxed mb-8">Offsetcheck exists so you don't have to take the bank's word for it. Upload your statements and check the numbers yourself.</p>
-        <a href="news.html" class="inline-flex items-center gap-2 text-brand-400 font-semibold hover:text-brand-300 transition-colors">Read the reporting that started this
+        <a href="news.html" data-cta="news_teaser" class="inline-flex items-center gap-2 text-brand-400 font-semibold hover:text-brand-300 transition-colors">Read the reporting that started this
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
       </div>
@@ -261,7 +261,7 @@ tailwind.config = {
           <li class="flex items-center gap-3 text-sm text-ink-500"><svg class="w-5 h-5 text-ink-700 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>PDF &amp; image parsing</li>
           <li class="flex items-center gap-3 text-sm text-ink-500"><svg class="w-5 h-5 text-ink-700 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Letter of demand</li>
         </ul>
-        <button class="w-full py-3 bg-ink-800 hover:bg-ink-700 text-white font-semibold rounded-xl transition-colors border border-ink-700">Get started</button>
+        <button data-cta="pricing_free" class="w-full py-3 bg-ink-800 hover:bg-ink-700 text-white font-semibold rounded-xl transition-colors border border-ink-700">Get started</button>
       </div>
       <div class="tier-card tier-popular glass rounded-2xl p-8 reveal" style="transition-delay:.1s">
         <div class="mb-6">
@@ -277,7 +277,7 @@ tailwind.config = {
           <li class="flex items-center gap-3 text-sm text-ink-300"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Priority support</li>
           <li class="flex items-center gap-3 text-sm text-ink-300"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Historical trend analysis</li>
         </ul>
-        <button class="w-full py-3 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 font-semibold rounded-xl transition-colors">Start Pro trial</button>
+        <button data-cta="pricing_pro" class="w-full py-3 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 font-semibold rounded-xl transition-colors">Start Pro trial</button>
       </div>
       <div class="tier-card glass rounded-2xl p-8 reveal" style="transition-delay:.2s">
         <div class="mb-6">
@@ -293,7 +293,7 @@ tailwind.config = {
           <li class="flex items-center gap-3 text-sm text-ink-300"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Dedicated account manager</li>
           <li class="flex items-center gap-3 text-sm text-ink-300"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Custom integrations</li>
         </ul>
-        <button class="w-full py-3 bg-ink-800 hover:bg-ink-700 text-white font-semibold rounded-xl transition-colors border border-ink-700">Contact sales</button>
+        <button data-cta="pricing_advisor" class="w-full py-3 bg-ink-800 hover:bg-ink-700 text-white font-semibold rounded-xl transition-colors border border-ink-700">Contact sales</button>
       </div>
     </div>
   </div>
@@ -363,5 +363,6 @@ function animateStats() {
 }
 setTimeout(animateStats, 800);
 </script>
+<script src="analytics.js" defer></script>
 </body>
 </html>

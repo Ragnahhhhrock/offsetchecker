@@ -177,7 +177,7 @@ tailwind.config = {
         <h3 class="text-xl font-bold text-white mb-3 leading-snug">Hidden mortgage offset failures costing Australians millions in lost interest savings</h3>
         <p class="text-ink-400 text-sm leading-relaxed mb-4">The regulator's announcement of review 26-173MR: banks paid over $55 million in compensation for offset failures, and weaknesses were found in how all eight reviewed banks set up, monitored and managed offset accounts.</p>
         <blockquote class="border-l-2 border-brand-500 pl-4 text-sm text-ink-300 italic mb-6">"When offset accounts don't operate correctly, the harm can be hidden. Loan repayments stay the same, while customers unknowingly pay more interest and take longer to repay their loan."<span class="block mt-2 not-italic text-xs text-ink-500">— Sarah Court, ASIC Chair</span></blockquote>
-        <a href="https://www.asic.gov.au/about-asic/news-centre/find-a-media-release/2026-releases/26-173mr-hidden-mortgage-offset-failures-costing-australians-millions-in-lost-interest-savings" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors">Read the media release
+        <a href="https://www.asic.gov.au/about-asic/news-centre/find-a-media-release/2026-releases/26-173mr-hidden-mortgage-offset-failures-costing-australians-millions-in-lost-interest-savings" target="_blank" rel="noopener" data-featured="asic_media_release" class="mt-auto inline-flex items-center gap-2 text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors">Read the media release
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </article>
@@ -189,7 +189,7 @@ tailwind.config = {
         <h3 class="text-xl font-bold text-white mb-3 leading-snug">Mortgage borrowers miss out on millions in offset savings due to bank failures, ASIC finds</h3>
         <p class="text-ink-400 text-sm leading-relaxed mb-4">The human side of the report. Brisbane homeowner Brooke discovered — only while refinancing — that her offset had been linked to the wrong loan, then fallen off entirely. The bank offered more than $5,000 in compensation, but she had no way to verify the figure.</p>
         <blockquote class="border-l-2 border-brand-500 pl-4 text-sm text-ink-300 italic mb-6">"We had no idea how much money we were actually out of pocket."<span class="block mt-2 not-italic text-xs text-ink-500">— Brooke, offset account holder</span></blockquote>
-        <a href="https://www.abc.net.au/news/2026-07-29/home-loan-borrowers-miss-out-on-millions-in-offset-savings-asic/106965180" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors">Read the article
+        <a href="https://www.abc.net.au/news/2026-07-29/home-loan-borrowers-miss-out-on-millions-in-offset-savings-asic/106965180" target="_blank" rel="noopener" data-featured="abc_news" class="mt-auto inline-flex items-center gap-2 text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors">Read the article
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </article>
@@ -250,7 +250,7 @@ tailwind.config = {
     <div class="reveal glass rounded-2xl p-10 text-center glow">
       <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Don't take the bank's word for it</h2>
       <p class="text-ink-400 max-w-xl mx-auto mb-8">Run your own statements through the check. Two minutes, to the cent, with the working shown.</p>
-      <a href="check.html" class="inline-flex px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
+      <a href="check.html" data-cta="news_bottom" class="inline-flex px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
     </div>
   </div>
 </section>
@@ -314,8 +314,8 @@ function renderResources() {
   const totalPages = Math.ceil(RESOURCES.length / PER_PAGE);
   const start = (currentPage - 1) * PER_PAGE;
   const pageItems = RESOURCES.slice(start, start + PER_PAGE);
-  list.innerHTML = pageItems.map(r => `
-    <a href="${r.url}" target="_blank" rel="noopener" class="block glass rounded-2xl p-6 hover:border-brand-500/40 transition-colors group">
+  list.innerHTML = pageItems.map((r, i) => `
+    <a href="${r.url}" target="_blank" rel="noopener" data-res-index="${start + i}" class="block glass rounded-2xl p-6 hover:border-brand-500/40 transition-colors group">
       <div class="flex flex-wrap items-center gap-3 mb-2">
         <span class="mono text-[11px] font-bold tracking-wider px-3 py-1 rounded-full bg-ink-800 text-brand-400 border border-ink-700">${r.outlet.toUpperCase()} · ${r.kind.toUpperCase()}</span>
         <span class="mono text-xs text-ink-500">${r.date}</span>
@@ -333,11 +333,32 @@ function renderResources() {
   ctrl.innerHTML = btns;
   ctrl.querySelectorAll('.page-btn').forEach(b => b.addEventListener('click', () => {
     currentPage = parseInt(b.dataset.page);
+    trackEvent('resources_paginated', { page: currentPage });
     renderResources();
     document.getElementById('resourceList').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }));
 }
 renderResources();
+
+// Delegated: survives pagination re-renders
+document.getElementById('resourceList').addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-res-index]');
+  if (!a) return;
+  const item = RESOURCES[parseInt(a.dataset.resIndex)];
+  if (!item) return;
+  trackEvent('resource_clicked', {
+    outlet: item.outlet,
+    kind: item.kind,
+    title: item.title.slice(0, 90),
+    position: parseInt(a.dataset.resIndex) + 1
+  });
+});
+
+// Featured story cards
+document.querySelectorAll('[data-featured]').forEach(el => el.addEventListener('click', () => {
+  trackEvent('featured_article_clicked', { source: el.dataset.featured });
+}));
 </script>
+<script src="analytics.js" defer></script>
 </body>
 </html>

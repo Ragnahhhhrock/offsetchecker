@@ -184,7 +184,7 @@ tailwind.config = {
       <div class="reveal glass rounded-2xl p-6" style="transition-delay:.1s">
         <h3 class="text-sm font-bold text-white mb-2">Found a discrepancy?</h3>
         <p class="text-sm text-ink-500 mb-3">Run the check first — the dashboard gives you the figures your lender will ask for.</p>
-        <a href="check.html" class="text-sm text-brand-400 font-semibold hover:text-brand-300 transition-colors">Run the offset check &rarr;</a>
+        <a href="check.html" data-cta="contact_card_check" class="text-sm text-brand-400 font-semibold hover:text-brand-300 transition-colors">Run the offset check &rarr;</a>
       </div>
     </div>
   </div>
@@ -231,13 +231,28 @@ document.querySelectorAll('.slide-up').forEach(el => {
 });
 </script>
 <script>
+const contactForm = document.querySelector('form[action*="formsubmit"]');
+// First interaction with any field
+if (contactForm) {
+  contactForm.addEventListener('focusin', function once() {
+    trackEvent('contact_form_started', { topic: document.getElementById('contactTopic').value });
+    contactForm.removeEventListener('focusin', once);
+  });
+  // Stash the topic so it survives the redirect back from the form handler
+  contactForm.addEventListener('submit', () => {
+    try { sessionStorage.setItem('contact_topic', document.getElementById('contactTopic').value) } catch (e) {}
+  });
+}
 // Show confirmation when redirected back from the form handler
 if (window.location.search.indexOf('sent=1') !== -1) {
   const banner = document.getElementById('sentBanner');
   banner.classList.remove('hidden');
   banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  if (window.dataLayer) gtag('event', 'contact_submitted')
+  let topic = '';
+  try { topic = sessionStorage.getItem('contact_topic') || ''; sessionStorage.removeItem('contact_topic') } catch (e) {}
+  trackEvent('contact_submitted', { topic: topic || 'unknown' })
 }
 </script>
+<script src="analytics.js" defer></script>
 </body>
 </html>

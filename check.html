@@ -658,7 +658,8 @@ $$('.tab-btn').forEach(btn => {
     btn.classList.remove('tab-inactive');
     btn.classList.add('tab-active');
     $$('.tab-panel').forEach(p => p.classList.add('hidden'));
-    $('#panel-' + tab).classList.remove('hidden')
+    $('#panel-' + tab).classList.remove('hidden');
+    trackEvent('tab_switched', { tab: tab })
   })
 }); // ============ FILE UPLOAD ============
 const dropZone = $('#dropZone');
@@ -699,6 +700,7 @@ function handleFiles(files) {
     const key = file.name + ':' + file.size;
     if (!validExts.includes(ext)) {
       showToast('Unsupported file: ' + file.name, 'error');
+      trackEvent('file_rejected', { reason: 'unsupported_type', ext: ext });
       return
     }
     if (seenFiles.has(key)) return; // same file dropped twice — skip silently
@@ -708,8 +710,14 @@ function handleFiles(files) {
   if (!batch.length) return;
   if (state.tier === 'free' && state.statementsProcessed + batch.length > FREE_TIER_LIMIT) {
     showToast('Free tier limited to ' + FREE_TIER_LIMIT + ' statements. Upgrade to Pro.', 'error');
+    trackEvent('free_tier_limit_hit', { attempted_total: state.statementsProcessed + batch.length, limit: FREE_TIER_LIMIT });
     return
   }
+  trackEvent('file_selected', {
+    files: batch.length,
+    types: Array.from(new Set(batch.map(b => b.ext))).join(','),
+    total_kb: Math.round(batch.reduce((s, b) => s + b.file.size, 0) / 1024)
+  });
   const txBefore = state.transactions.length;
   const total = batch.length;
   let done = 0;
@@ -758,9 +766,9 @@ function renderLinkagePanel() {
     row.innerHTML = '<div class="flex-1 min-w-0"><p class="mono text-sm text-white truncate">' + acct.name + '</p><p class="text-xs text-ink-600">' + txCount + ' transactions</p></div>' +
       '<label class="flex items-center gap-2 text-sm text-ink-300 cursor-pointer"><input type="checkbox" class="linkage-linked w-4 h-4 accent-brand-500" ' + (link.linked ? 'checked' : '') + '> Linked to this mortgage</label>' +
       '<div class="flex items-center gap-2 text-xs text-ink-500"><span>from</span><input type="date" class="linkage-from px-2 py-1.5 bg-ink-950 border border-ink-700 rounded-lg text-white font-mono text-xs" value="' + link.from + '"><span>to</span><input type="date" class="linkage-to px-2 py-1.5 bg-ink-950 border border-ink-700 rounded-lg text-white font-mono text-xs" value="' + link.to + '"></div>';
-    row.querySelector('.linkage-linked').addEventListener('change', e => { link.linked = e.target.checked });
-    row.querySelector('.linkage-from').addEventListener('change', e => { link.from = e.target.value });
-    row.querySelector('.linkage-to').addEventListener('change', e => { link.to = e.target.value });
+    row.querySelector('.linkage-linked').addEventListener('change', e => { link.linked = e.target.checked; trackEvent('linkage_updated', { field: 'linked', value: e.target.checked }) });
+    row.querySelector('.linkage-from').addEventListener('change', e => { link.from = e.target.value; trackEvent('linkage_updated', { field: 'from' }) });
+    row.querySelector('.linkage-to').addEventListener('change', e => { link.to = e.target.value; trackEvent('linkage_updated', { field: 'to' }) });
     rows.appendChild(row)
   });
   const multi = state.accounts.length > 1;
@@ -937,7 +945,8 @@ async function parsePDF(file) {
     extractTransactionsFromText(fullText);
     if (emptyPages > 0) showToast(file.name + ': ' + emptyPages + ' of ' + pdf.numPages + ' pages had no text layer (skipped)', 'info')
   } catch (err) {
-    showToast('Could not parse ' + file.name + ': ' + err.message, 'error')
+    showToast('Could not parse ' + file.name + ': ' + err.message, 'error');
+    trackEvent('ingest_error', { file_type: 'pdf', message: String(err.message || err).slice(0, 90) })
   }
 }
 
@@ -976,12 +985,14 @@ function registerAccount(hint) {
     const name = 'Offset account ' + (state.accounts.length + 1) + ' (···' + hint.slice(-4) + ')';
     state.accounts.push({ name, hint });
     state.linkage[name] = { linked: true, from: '', to: '' };
+    trackEvent('account_detected', { accounts_total: state.accounts.length, account_number_identified: true });
     return name
   }
   if (state.accounts.length === 1 && !state.accounts[0].hint) return state.accounts[0].name;
   const name = 'Offset account ' + (state.accounts.length + 1);
   state.accounts.push({ name, hint: null });
   state.linkage[name] = { linked: true, from: '', to: '' };
+  trackEvent('account_detected', { accounts_total: state.accounts.length, account_number_identified: false });
   return name
 }
 
@@ -1043,6 +1054,7 @@ function extractTransactionsFromText(text) {
   })
 } // ============ MANUAL ENTRY ============
 $('#addTxRow').addEventListener('click', () => {
+  trackEvent('manual_row_added');
   const tbody = $('#manualTxTable');
   const tr = document.createElement('tr');
   tr.className = 'statement-row border-b border-ink-800/50';
@@ -1082,6 +1094,7 @@ $('#loadDemoBtn').addEventListener('click', () => {
 }); // ============ CALCULATION ENGINE ============
 $('#calculateBtn').addEventListener('click', runCalculation);
 $('#resetBtn').addEventListener('click', () => {
+  trackEvent('reset_clicked');
   state.transactions = [];
   state.statements = [];
   state.statementsProcessed = 0;
@@ -1293,7 +1306,11 @@ function renderResults(dailyOffsets) {
     banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-red-500/10 border border-red-500/30';
     icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-red-500/20';
     icon.innerHTML = '<svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
-    trackEvent('discrepancy_detected', { difference: Math.round(Math.abs(state.difference) * 100) / 100 });
+    trackEvent('discrepancy_detected', {
+      difference: Math.round(Math.abs(state.difference) * 100) / 100,
+      discrepancy_pct: Math.round(Math.abs(state.discrepancyPct) * 100) / 100,
+      severity: 'significant'
+    });
     title.textContent = 'Significant Discrepancy Detected';
     title.className = 'font-semibold text-red-400';
     desc.textContent = 'Your lender underpaid you by ' + fmtMoney(Math.abs(state.difference)) + '. We recommend generating a letter of demand.';
@@ -1303,11 +1320,17 @@ function renderResults(dailyOffsets) {
     banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-yellow-500/10 border border-yellow-500/30';
     icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-yellow-500/20';
     icon.innerHTML = '<svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+    trackEvent('discrepancy_detected', {
+      difference: Math.round(Math.abs(state.difference) * 100) / 100,
+      discrepancy_pct: Math.round(Math.abs(state.discrepancyPct) * 100) / 100,
+      severity: 'minor'
+    });
     title.textContent = 'Minor Discrepancy Found';
     title.className = 'font-semibold text-yellow-400';
     desc.textContent = 'Small variance of ' + fmtMoney(Math.abs(state.difference)) + '. Worth monitoring.';
     $('#letterSection').classList.add('hidden')
   } else {
+    trackEvent('no_discrepancy_found', { difference: Math.round(Math.abs(state.difference) * 100) / 100 });
     banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-green-500/10 border border-green-500/30';
     icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-green-500/20';
     icon.innerHTML = '<svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
@@ -1589,5 +1612,6 @@ document.querySelectorAll('.slide-up').forEach(el => {
 });
 generateLetterPreview();
 </script>
+<script src="analytics.js" defer></script>
 </body>
 </html>
