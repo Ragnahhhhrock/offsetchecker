@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Offsetcheck — Keeping the bankers honest.</title>
-<meta name="description" content="Offsetcheck independently re-calculates the interest on your home loan and the benefit from your offset account — line by line, to the cent.">
+<meta name="description" content="Upload your mortgage and offset statements. Offsetcheck independently re-calculates your interest and offset benefit line by line, to the cent — and shows you the difference.">
+<link rel="canonical" href="https://offsetcheck.com/">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Offsetcheck">
 <meta property="og:url" content="https://offsetcheck.com/">
 <meta property="og:title" content="Offsetcheck — Keeping the bankers honest.">
-<meta property="og:description" content="Upload your mortgage statements. We re-calculate your interest and offset benefit line by line, to the cent — and show you the difference.">
+<meta property="og:description" content="Upload your mortgage and offset statements. Offsetcheck independently re-calculates your interest and offset benefit line by line, to the cent — and shows you the difference.">
 <meta property="og:image" content="https://offsetcheck.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,7 +19,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Offsetcheck — Keeping the bankers honest.">
-<meta name="twitter:description" content="Upload your mortgage statements. We re-calculate your interest and offset benefit line by line, to the cent — and show you the difference.">
+<meta name="twitter:description" content="Upload your mortgage and offset statements. Offsetcheck independently re-calculates your interest and offset benefit line by line, to the cent — and shows you the difference.">
 <meta name="twitter:image" content="https://offsetcheck.com/og-image.png">
 <meta name="twitter:image:alt" content="Offsetcheck — Keeping the bankers honest.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -38,13 +39,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <script>
 tailwind.config = {
   darkMode: 'class',
@@ -106,25 +100,36 @@ tailwind.config = {
   .slide-up { transition: opacity 0.8s ease; }
   input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Offsetcheck",
+  "url": "https://offsetcheck.com/",
+  "description": "Independent mortgage offset account auditing. Upload your statements and re-calculate your interest line by line, to the cent."
+}
+</script>
 </head>
 <body class="bg-ink-950 text-ink-200 antialiased">
 
 <!-- Nav -->
 <nav class="fixed top-0 inset-x-0 z-50 glass border-b border-ink-800/50">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-3">
+    <a href="index.html" class="flex items-center gap-3">
       <img src="offsetcheck-logo-horizontal-white.svg" alt="Offsetcheck" class="h-7 w-auto">
     </a>
-    <div class="hidden md:flex items-center gap-8 text-sm text-ink-400">
-      <a href="#how-it-works" class="hover:text-white transition-colors">How it works</a>
-      <a href="#calculator" class="hover:text-white transition-colors">The check</a>
-      <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+    <div class="hidden md:flex items-center gap-8 text-sm transition-colors">
+      <a href="index.html#how-it-works" class="text-ink-400 hover:text-white transition-colors">How it works</a>
+      <a href="check.html" class="text-ink-400 hover:text-white transition-colors">The check</a>
+      <a href="news.html" class="text-ink-400 hover:text-white transition-colors">In the news</a>
+      <a href="index.html#pricing" class="text-ink-400 hover:text-white transition-colors">Pricing</a>
+      <a href="contact.html" class="text-ink-400 hover:text-white transition-colors">Contact</a>
     </div>
     <div class="flex items-center gap-3">
       <button id="themeToggle" class="w-9 h-9 rounded-lg bg-ink-900 border border-ink-800 flex items-center justify-center text-ink-400 hover:text-white transition-colors" title="Toggle theme">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
       </button>
-      <a href="#calculator" class="hidden sm:inline-flex px-5 py-2.5 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 text-sm font-semibold rounded-xl transition-all">Check my offset</a>
+      <a href="check.html" class="hidden sm:inline-flex px-5 py-2.5 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 text-sm font-semibold rounded-xl transition-all">Check my offset</a>
     </div>
   </div>
 </nav>
@@ -142,7 +147,7 @@ tailwind.config = {
         Upload your mortgage and offset statements. We re-calculate every day's interest and offset benefit — line by line, to the cent — and show you the difference.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
-        <a href="#calculator" class="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
+        <a href="check.html" class="px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
         <a href="#how-it-works" class="px-8 py-4 bg-ink-900 hover:bg-ink-800 text-ink-300 font-semibold rounded-xl border border-ink-700 transition-colors">See how it works</a>
       </div>
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
@@ -199,331 +204,41 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- Calculator / Main App -->
-<section id="calculator" class="py-20 px-4 sm:px-6 lg:px-8">
+<!-- Why We Built Offsetcheck -->
+<section class="py-20 px-4 sm:px-6 lg:px-8 border-t border-ink-800/50">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 reveal">
-      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">The offset check</h2>
-      <p class="text-ink-400 text-lg">Upload your statements or enter data manually. We'll do the rest.</p>
-      <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink-900/80 border border-ink-700/50">
-        <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-        <span class="text-sm text-ink-300">No bank affiliation. No lender ties. 100% independent.</span>
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <p class="mono text-brand-400 text-xs tracking-widest mb-4">WHY WE BUILT OFFSETCHECK</p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">The harm is hidden. The maths is not.</h2>
+        <p class="text-ink-400 leading-relaxed mb-4">In July 2026, the corporate regulator ASIC reported that Australian banks had paid more than <span class="text-white font-semibold">$55 million</span> in compensation for mortgage offset failures — accounts never opened, never linked, or quietly linked to the wrong loan. Most customers never noticed: the repayment stays the same while the interest silently rises.</p>
+        <p class="text-ink-400 leading-relaxed mb-8">Offsetcheck exists so you don't have to take the bank's word for it. Upload your statements and check the numbers yourself.</p>
+        <a href="news.html" class="inline-flex items-center gap-2 text-brand-400 font-semibold hover:text-brand-300 transition-colors">Read the reporting that started this
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
       </div>
-    </div>
-
-    <!-- Tabs -->
-    <div class="flex justify-center mb-8 reveal">
-      <div class="inline-flex bg-ink-900 rounded-xl p-1 border border-ink-800">
-        <button class="tab-btn px-6 py-2.5 rounded-lg text-sm font-semibold transition-all tab-active" data-tab="upload">Upload Statements</button>
-        <button class="tab-btn px-6 py-2.5 rounded-lg text-sm font-semibold transition-all tab-inactive" data-tab="manual">Manual entry</button>
-        <button class="tab-btn px-6 py-2.5 rounded-lg text-sm font-semibold transition-all tab-inactive" data-tab="demo">Demo Data</button>
-      </div>
-    </div>
-
-    <!-- Upload Panel -->
-    <div id="panel-upload" class="tab-panel reveal">
-      <div class="glass rounded-2xl p-8 mb-8">
-        <div id="dropZone" class="border-2 border-dashed border-ink-700 rounded-xl p-12 text-center cursor-pointer transition-all hover:border-brand-500 hover:bg-brand-500/5">
-          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-brand-500/10 flex items-center justify-center">
-            <svg class="w-8 h-8 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-          </div>
-          <p class="text-lg font-semibold text-white mb-2">Drop your statements here</p>
-          <p class="text-ink-500 text-sm mb-4">or click to browse. CSV, XLSX, PDF, TXT, MD, PNG, JPG accepted — bulk batches welcome.</p>
-          <p class="text-ink-600 text-xs">Free tier: up to 250 statements during beta. <a href="#pricing" class="text-brand-400 hover:underline">Upgrade for more</a>.</p>
-          <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.pdf,.png,.jpg,.jpeg,.txt,.md" multiple>
+      <div class="grid grid-cols-2 gap-4 reveal" style="transition-delay:.15s">
+        <div class="glass rounded-2xl p-6">
+          <p class="mono text-3xl font-bold gradient-text mb-2">$55M+</p>
+          <p class="text-xs text-ink-500 leading-relaxed">Compensation paid by banks for offset failures, Sep 2023 – Aug 2025</p>
         </div>
-        <div id="uploadProgress" class="hidden mt-6">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-sm text-ink-400" id="uploadStatus">Processing...</span>
-            <span class="text-sm text-brand-400 font-mono" id="uploadPercent">0%</span>
-          </div>
-          <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="glass rounded-2xl p-6">
+          <p class="mono text-3xl font-bold text-white mb-2">8 banks</p>
+          <p class="text-xs text-ink-500 leading-relaxed">Reviewed by ASIC — more than 70% of Australia's home-loan market</p>
         </div>
-        <div id="fileList" class="mt-6 space-y-2 hidden"></div>
-        <div id="linkagePanel" class="hidden mt-6">
-          <h4 class="text-sm font-semibold text-ink-300 mb-2">Offset account linkage</h4>
-          <p class="text-xs text-ink-600 mb-3" id="linkageHint"></p>
-          <div id="linkageRows" class="space-y-2"></div>
+        <div class="glass rounded-2xl p-6">
+          <p class="mono text-3xl font-bold text-white mb-2">$349.1B</p>
+          <p class="text-xs text-ink-500 leading-relaxed">Held in offset accounts as of March 2026 — up 28% in two years</p>
         </div>
-        <div class="mt-6 grid sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Current Loan Balance ($)</label>
-            <input type="number" id="uploadLoanBalance" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" placeholder="500000" value="500000">
-            <p class="text-xs text-ink-600 mt-1">The amount still owing at the start of the period — not the original loan amount.</p>
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Interest Rate (% p.a.)</label>
-            <input type="number" id="uploadInterestRate" step="0.01" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" placeholder="5.99" value="5.99">
-          </div>
+        <div class="glass rounded-2xl p-6">
+          <p class="mono text-3xl font-bold text-white mb-2">55%</p>
+          <p class="text-xs text-ink-500 leading-relaxed">Of Australian home loans now include an offset facility</p>
         </div>
-        <p class="text-xs text-ink-600 mt-3">The statement period is detected automatically from your uploaded transactions.</p>
-      </div>
-    </div>
-
-    <!-- Manual Entry Panel -->
-    <div id="panel-manual" class="tab-panel hidden reveal">
-      <div class="glass rounded-2xl p-8 mb-8">
-        <h3 class="text-lg font-bold text-white mb-6">Loan details</h3>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Current Loan Balance ($)</label>
-            <input type="number" id="loanBalance" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" placeholder="500000" value="500000">
-            <p class="text-xs text-ink-600 mt-1">The amount still owing at the start of the period — not the original loan amount. Offset benefit is capped at this figure.</p>
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Interest Rate (% p.a.)</label>
-            <input type="number" id="interestRate" step="0.01" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" placeholder="5.99" value="5.99">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Statement Start Date</label>
-            <input type="date" id="startDate" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" value="2024-01-01">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Statement End Date</label>
-            <input type="date" id="endDate" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white font-mono focus:border-brand-500 transition-colors" value="2024-01-31">
-          </div>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">Transactions</h3>
-        <p class="text-xs text-ink-600 mb-4">Name a transaction "Home Loan Repayment" or "Interest Charged" and it is totalled as such; everything else is treated as offset account activity.</p>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-ink-800">
-                <th class="text-left py-3 px-4 text-ink-500 font-medium">Date</th>
-                <th class="text-left py-3 px-4 text-ink-500 font-medium">Description</th>
-                <th class="text-right py-3 px-4 text-ink-500 font-medium">Amount ($)</th>
-                <th class="text-center py-3 px-4 text-ink-500 font-medium">Type</th>
-                <th class="text-center py-3 px-4 text-ink-500 font-medium"></th>
-              </tr>
-            </thead>
-            <tbody id="manualTxTable">
-              <tr class="statement-row border-b border-ink-800/50">
-                <td class="py-2 px-4"><input type="date" class="tx-date w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white font-mono text-sm focus:border-brand-500" value="2024-01-01"></td>
-                <td class="py-2 px-4"><input type="text" class="tx-desc w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white text-sm focus:border-brand-500" value="Opening Balance"></td>
-                <td class="py-2 px-4"><input type="number" class="tx-amount w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white font-mono text-sm text-right focus:border-brand-500" value="50000"></td>
-                <td class="py-2 px-4 text-center"><select class="tx-type px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white text-sm focus:border-brand-500"><option value="credit">Credit</option><option value="debit">Debit</option></select></td>
-                <td class="py-2 px-4 text-center"><button class="delete-row text-ink-600 hover:text-red-400 transition-colors" title="Remove"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="flex gap-3 mt-4">
-          <button id="addTxRow" class="px-4 py-2 bg-ink-800 hover:bg-ink-700 text-ink-300 text-sm font-medium rounded-lg transition-colors border border-ink-700 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Add transaction
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Demo Panel -->
-    <div id="panel-demo" class="tab-panel hidden reveal">
-      <div class="glass rounded-2xl p-8 mb-8 text-center">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-brand-500/10 flex items-center justify-center">
-          <svg class="w-8 h-8 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">Load Demo Data</h3>
-        <p class="text-ink-400 mb-6 max-w-md mx-auto">See how the auditor works with realistic sample data. A $500K loan with a busy offset account, three repayments and three interest charges over 90 days.</p>
-        <button id="loadDemoBtn" class="px-6 py-3 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 font-semibold rounded-xl transition-all">Load Demo Scenario</button>
-      </div>
-    </div>
-
-    <!-- Calculate Button -->
-    <div class="text-center mb-12 reveal">
-      <button id="calculateBtn" class="px-10 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold text-lg rounded-xl transition-all hover:scale-105 glow flex items-center gap-3 mx-auto">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-        Run the numbers
-      </button>
-    </div>
-    <!-- Results Dashboard -->
-    <div id="resultsSection" class="hidden">
-      <div class="glass rounded-2xl p-8 mb-8 reveal">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="text-2xl font-bold text-white">Statement dashboard</h3>
-          <div class="flex gap-2">
-            <button id="exportResults" class="px-3 py-1.5 bg-ink-800 hover:bg-ink-700 text-ink-300 text-sm rounded-lg transition-colors border border-ink-700 flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-              Export
-            </button>
-            <button id="resetBtn" class="px-3 py-1.5 bg-ink-800 hover:bg-ink-700 text-ink-300 text-sm rounded-lg transition-colors border border-ink-700">Reset</button>
-          </div>
-        </div>
-        <p class="mono text-xs text-ink-500 mb-8" id="sumPeriod"></p>
-
-        <!-- Ingestion summary: the four headline figures -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Total mortgage payments</p>
-            <p class="mono text-2xl font-bold text-brand-300 number-animate" id="sumMortgage">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1" id="sumMortgageCount">0 payments detected</p>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Total interest charged</p>
-            <p class="mono text-2xl font-bold text-brand-500 number-animate" id="sumInterest">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1" id="sumInterestCount">0 charges detected</p>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Total offset benefit</p>
-            <p class="mono text-2xl font-bold text-green-400 number-animate" id="sumOffset">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1">Recalculated from daily balances</p>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Offset vs interest</p>
-            <p class="mono text-2xl font-bold text-white number-animate" id="sumNetInterest">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1" id="sumNetLabel">Interest still paid after offset</p>
-          </div>
-        </div>
-
-        <!-- Coverage bar -->
-        <div class="bg-ink-900 rounded-xl p-5 border border-ink-800 mb-8">
-          <div class="flex items-center justify-between mb-3">
-            <p class="text-sm font-semibold text-ink-300">How much of your interest the offset covered</p>
-            <p class="mono text-sm text-brand-400" id="coveragePct"></p>
-          </div>
-          <div class="coverage-track"><div class="coverage-fill" id="coverageFill" style="width:0%"></div></div>
-        </div>
-
-        <!-- Offset accuracy cards -->
-        <h4 class="text-sm font-semibold text-ink-300 mb-4">Offset accuracy check</h4>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Expected Offset</p>
-            <p class="mono text-2xl font-bold text-white number-animate" id="resExpected">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1">What you should have received</p>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Actual Offset Applied</p>
-            <p class="mono text-2xl font-bold text-white number-animate" id="resActual">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1">What the lender gave you</p>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Difference</p>
-            <p class="mono text-2xl font-bold number-animate" id="resDiff">$0.00</p>
-            <p class="text-xs text-ink-600 mt-1" id="resDiffLabel">Underpayment / Overpayment</p>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <p class="text-sm text-ink-500 mb-1">Discrepancy %</p>
-            <p class="mono text-2xl font-bold number-animate" id="resPct">0.00%</p>
-            <p class="text-xs text-ink-600 mt-1">Of expected offset amount</p>
-          </div>
-        </div>
-
-        <!-- Status Banner -->
-        <div id="statusBanner" class="rounded-xl p-4 mb-8 flex items-center gap-3">
-          <div id="statusIcon" class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"></div>
-          <div>
-            <p class="font-semibold text-white" id="statusTitle">Analysis complete</p>
-            <p class="text-sm text-ink-400" id="statusDesc">Your offset calculations look correct.</p>
-          </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="grid lg:grid-cols-2 gap-6 mb-6">
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <h4 class="text-sm font-semibold text-ink-300 mb-4">Daily offset balance</h4>
-            <div class="h-52"><canvas id="balanceChart"></canvas></div>
-          </div>
-          <div class="bg-ink-900 rounded-xl p-5 border border-ink-800">
-            <h4 class="text-sm font-semibold text-ink-300 mb-4">Expected vs actual offset</h4>
-            <div class="h-52"><canvas id="offsetChart"></canvas></div>
-          </div>
-        </div>
-        <div class="bg-ink-900 rounded-xl p-5 border border-ink-800 mb-8">
-          <h4 class="text-sm font-semibold text-ink-300 mb-1">Payments, interest and offset — side by side</h4>
-          <p class="text-xs text-ink-600 mb-4">The bank's figures in amber and orange; the verified offset benefit in green.</p>
-          <div class="h-56"><canvas id="paymentsChart"></canvas></div>
-        </div>
-
-        <!-- Classification ledger -->
-        <div class="bg-ink-900 rounded-xl border border-ink-800 overflow-hidden mb-8">
-          <div class="px-5 py-4 border-b border-ink-800 flex items-center justify-between">
-            <h4 class="text-sm font-semibold text-ink-300">Transaction classification</h4>
-            <span class="text-xs text-ink-600" id="classCount">0 transactions</span>
-          </div>
-          <div class="overflow-x-auto max-h-96">
-            <table class="w-full text-sm">
-              <thead class="bg-ink-950 sticky top-0">
-                <tr>
-                  <th class="text-left py-3 px-4 text-ink-500 font-medium">Date</th>
-                  <th class="text-left py-3 px-4 text-ink-500 font-medium">Description</th>
-                  <th class="text-left py-3 px-4 text-ink-500 font-medium">Account</th>
-                  <th class="text-right py-3 px-4 text-ink-500 font-medium">Amount</th>
-                  <th class="text-center py-3 px-4 text-ink-500 font-medium">Category</th>
-                </tr>
-              </thead>
-              <tbody id="classTable"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Daily Breakdown Table -->
-        <div class="bg-ink-900 rounded-xl border border-ink-800 overflow-hidden">
-          <div class="px-5 py-4 border-b border-ink-800 flex items-center justify-between">
-            <h4 class="text-sm font-semibold text-ink-300">Daily breakdown</h4>
-            <span class="text-xs text-ink-600" id="breakdownCount">0 days</span>
-          </div>
-          <div class="overflow-x-auto max-h-96">
-            <table class="w-full text-sm">
-              <thead class="bg-ink-950 sticky top-0">
-                <tr>
-                  <th class="text-left py-3 px-4 text-ink-500 font-medium">Date</th>
-                  <th class="text-right py-3 px-4 text-ink-500 font-medium">Offset Balance</th>
-                  <th class="text-right py-3 px-4 text-ink-500 font-medium">Daily Interest Saved</th>
-                  <th class="text-right py-3 px-4 text-ink-500 font-medium">Cumulative</th>
-                  <th class="text-center py-3 px-4 text-ink-500 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody id="breakdownTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Letter of Demand Section -->
-    <div id="letterSection" class="hidden">
-      <div class="glass rounded-2xl p-8 mb-8 reveal">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="text-2xl font-bold text-white">Letter of demand</h3>
-          <div class="flex gap-2">
-            <button id="downloadLetter" class="px-4 py-2 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 text-sm font-semibold rounded-lg transition-colors flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-              Download PDF
-            </button>
-          </div>
-        </div>
-        <p class="text-ink-400 mb-6">Based on the discrepancy detected, we've drafted a professional letter of demand. Fill in your details below to personalize it.</p>
-        <div class="grid sm:grid-cols-2 gap-4 mb-6">
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Your Full Name</label>
-            <input type="text" id="letterName" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white focus:border-brand-500 transition-colors" placeholder="John Smith">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Your Address</label>
-            <input type="text" id="letterAddress" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white focus:border-brand-500 transition-colors" placeholder="123 Main Street, Sydney NSW 2000">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Lender Name</label>
-            <input type="text" id="letterLender" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white focus:border-brand-500 transition-colors" placeholder="Big Bank Ltd">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Loan Account Number</label>
-            <input type="text" id="letterAccount" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white focus:border-brand-500 transition-colors" placeholder="123456789">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Lender Address</label>
-            <input type="text" id="letterLenderAddress" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white focus:border-brand-500 transition-colors" placeholder="Lender Disputes Department, PO Box 1000, Sydney NSW 2000">
-          </div>
-          <div>
-            <label class="block text-sm text-ink-400 mb-2">Your Email</label>
-            <input type="email" id="letterEmail" class="w-full px-4 py-3 bg-ink-900 border border-ink-700 rounded-xl text-white focus:border-brand-500 transition-colors" placeholder="john@example.com">
-          </div>
-        </div>
-        <div class="letter-preview rounded-xl" id="letterPreview"></div>
       </div>
     </div>
   </div>
 </section>
+
 <!-- Pricing -->
 <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8">
   <div class="max-w-5xl mx-auto">
@@ -594,7 +309,8 @@ tailwind.config = {
       <div class="flex items-center gap-6 text-sm text-ink-500">
         <a href="#" class="hover:text-white transition-colors">Privacy</a>
         <a href="#" class="hover:text-white transition-colors">Terms</a>
-        <a href="#" class="hover:text-white transition-colors">Contact</a>
+        <a href="news.html" class="hover:text-white transition-colors">In the news</a>
+        <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
       </div>
       <div class="text-center md:text-right">
         <p class="mono text-sm text-ink-400">Keeping the bankers honest.</p>
@@ -605,1114 +321,47 @@ tailwind.config = {
   </div>
 </footer>
 
-<!-- Toast Container -->
-<div id="toastContainer"></div>
-
 <script>
-const state = {
-    statements: [],
-    transactions: [],
-    loanBalance: 500000,
-    interestRate: 5.99,
-    startDate: '2024-01-01',
-    endDate: '2024-01-31',
-    dailyBalances: {},
-    expectedOffset: 0,
-    actualOffset: 0,
-    difference: 0,
-    discrepancyPct: 0,
-    chartInstances: {},
-    tier: 'free',
-    statementsProcessed: 0,
-    totalMortgagePayments: 0,
-    totalInterestPaid: 0,
-    totalOffsetBenefit: 0,
-    mortgageTxCount: 0,
-    interestTxCount: 0,
-    offsetTxCount: 0,
-    accounts: [],
-    linkage: {}
-  };
-const DEMO_DATA = {
-  loanBalance: 500000,
-  interestRate: 5.99,
-  startDate: '2024-01-01',
-  endDate: '2024-03-31',
-  transactions: [
-    { date: '2024-01-01', desc: 'Opening Balance', amount: 50000, type: 'credit' },
-    { date: '2024-01-02', desc: 'Home Loan Repayment', amount: 2950, type: 'debit' },
-    { date: '2024-01-05', desc: 'Salary Deposit', amount: 10000, type: 'credit' },
-    { date: '2024-01-10', desc: 'Bill Payment', amount: 5000, type: 'debit' },
-    { date: '2024-01-15', desc: 'Bonus', amount: 15000, type: 'credit' },
-    { date: '2024-01-20', desc: 'Car Insurance', amount: 2000, type: 'debit' },
-    { date: '2024-01-25', desc: 'Dividend', amount: 5000, type: 'credit' },
-    { date: '2024-01-31', desc: 'Interest Charged', amount: 2412.60, type: 'debit' },
-    { date: '2024-02-01', desc: 'Salary Deposit', amount: 10000, type: 'credit' },
-    { date: '2024-02-02', desc: 'Home Loan Repayment', amount: 2950, type: 'debit' },
-    { date: '2024-02-10', desc: 'Tax Refund', amount: 8000, type: 'credit' },
-    { date: '2024-02-15', desc: 'Holiday Booking', amount: 4000, type: 'debit' },
-    { date: '2024-02-20', desc: 'Salary Deposit', amount: 10000, type: 'credit' },
-    { date: '2024-02-25', desc: 'Groceries', amount: 1200, type: 'debit' },
-    { date: '2024-02-29', desc: 'Interest Charged', amount: 2287.45, type: 'debit' },
-    { date: '2024-03-01', desc: 'Salary Deposit', amount: 10000, type: 'credit' },
-    { date: '2024-03-02', desc: 'Home Loan Repayment', amount: 2950, type: 'debit' },
-    { date: '2024-03-05', desc: 'Investment Return', amount: 25000, type: 'credit' },
-    { date: '2024-03-10', desc: 'Home Renovation', amount: 15000, type: 'debit' },
-    { date: '2024-03-15', desc: 'Salary Deposit', amount: 10000, type: 'credit' },
-    { date: '2024-03-20', desc: 'School Fees', amount: 5000, type: 'debit' },
-    { date: '2024-03-25', desc: 'Salary Deposit', amount: 10000, type: 'credit' },
-    { date: '2024-03-31', desc: 'Interest Charged', amount: 2305.18, type: 'debit' }
-  ],
-  actualOffset: 1248.33
-}; // ============ UTILITIES ============
-function $(sel) {
-  return document.querySelector(sel)
-}
-
-function $$(sel) {
-  return document.querySelectorAll(sel)
-}
-
-function fmtMoney(n) {
-  return '$' + Math.abs(n).toLocaleString('en-AU', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
-}
-
-function fmtPct(n) {
-  return n.toFixed(2) + '%'
-}
-
-function showToast(msg, type = 'info') {
-  const c = $('#toastContainer');
-  const d = document.createElement('div');
-  d.className = 'toast toast-' + type;
-  d.textContent = msg;
-  c.appendChild(d);
-  setTimeout(() => d.remove(), 4000)
-}
-
-function parseDate(s) {
-  if (!s) return null;
-  const p = s.match(/^(?:(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4}))|(?:(\d{4})-(\d{2})-(\d{2}))$/);
-  if (!p) return null;
-  let d, m, y;
-  if (p[1]) {
-    d = +p[1];
-    m = +p[2];
-    y = +p[3];
-    if (y < 100) y += 2000
-  } else {
-    d = +p[6];
-    m = +p[5];
-    y = +p[4]
-  }
-  if (y < 1900 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) return null;
-  return y + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0')
-}
-
-function addDays(dateStr, days) {
-  const d = new Date(dateStr + 'T00:00:00');
-  d.setDate(d.getDate() + days);
-  return d.toISOString().split('T')[0]
-}
-
-function daysBetween(a, b) {
-  const d1 = new Date(a + 'T00:00:00'),
-    d2 = new Date(b + 'T00:00:00');
-  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24)) + 1
-}
-
-function animateNumber(el, target, prefix = '', suffix = '', duration = 1000) {
-  const start = performance.now();
-  const from = parseFloat(el.textContent.replace(/[^0-9.-]/g, '')) || 0;
-
-  function frame(now) {
-    const p = Math.min((now - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-    const val = from + (target - from) * ease;
-    let txt = prefix + Math.abs(val).toLocaleString('en-AU', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }) + suffix;
-    if (target < 0) txt = '-' + txt;
-    el.textContent = txt;
-    if (p < 1) requestAnimationFrame(frame)
-  }
-  requestAnimationFrame(frame)
-} 
-// ============ TRANSACTION CLASSIFICATION ============
-// Every ingested transaction is classified so loan-account activity
-// (repayments, interest charges) is totalled separately from offset
-// account activity (which drives the daily balance recalculation).
-const CATEGORY_RULES = [
-  { category: 'interest', re: /\binterest\b|\bint\.?\s?(charged|chg|debit)\b|debit interest|loan interest|interest charge/i },
-  { category: 'mortgage', re: /mortgage|home\s?loan|\bloan\s?(repay|payment|pmt)\b|\brepayment\b|principal( |\b.*)(payment|repay)|\bloan pmt\b/i },
-  { category: 'fee', re: /\bfee\b|account keeping|package fee|annual fee|service charge/i }
-];
-function classifyTransaction(tx) {
-  const d = (tx.desc || '').toLowerCase();
-  for (const rule of CATEGORY_RULES) {
-    if (rule.re.test(d)) return rule.category;
-  }
-  return 'offset';
-}
-function categoryLabel(c) {
-  return { interest: 'Interest charged', mortgage: 'Mortgage payment', fee: 'Bank fee', offset: 'Offset activity' }[c] || 'Offset activity';
-}
 // ============ SCROLL REVEAL ============
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target)
-    }
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
   })
-}, {
-  threshold: 0.1
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ============ THEME TOGGLE ============
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+  document.documentElement.classList.toggle('light')
 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el)); // ============ TAB SWITCHING ============
-$$('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const tab = btn.dataset.tab;
-    $$('.tab-btn').forEach(b => {
-      b.classList.remove('tab-active');
-      b.classList.add('tab-inactive')
-    });
-    btn.classList.remove('tab-inactive');
-    btn.classList.add('tab-active');
-    $$('.tab-panel').forEach(p => p.classList.add('hidden'));
-    $('#panel-' + tab).classList.remove('hidden')
-  })
-}); // ============ FILE UPLOAD ============
-const dropZone = $('#dropZone');
-const fileInput = $('#fileInput');
-dropZone.addEventListener('click', () => fileInput.click());
-dropZone.addEventListener('dragover', e => {
-  e.preventDefault();
-  dropZone.classList.add('drag-active')
+// ============ INIT ============
+document.querySelectorAll('.slide-up').forEach(el => {
+  setTimeout(() => el.classList.remove('hidden-initially'), 100)
 });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-active'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-active');
-  handleFiles(e.dataTransfer.files)
-});
-fileInput.addEventListener('change', e => handleFiles(e.target.files));
-
-// Raised from 3 to 250 for bulk testing — dial back before charging real users.
-const FREE_TIER_LIMIT = 250;
-const seenFiles = new Set();
-let ingestQueue = Promise.resolve();
-
-function updateIngestProgress(done, total, currentName) {
-  const wrap = $('#uploadProgress');
-  wrap.classList.remove('hidden');
-  const pct = total > 0 ? Math.round(done / total * 100) : 0;
-  $('#progressFill').style.width = pct + '%';
-  $('#uploadPercent').textContent = pct + '%';
-  $('#uploadStatus').textContent = done < total ? 'Processing ' + (done + 1) + ' of ' + total + ' — ' + currentName : 'Ingestion complete';
-}
-
-function handleFiles(files) {
-  if (!files.length) return;
-  const validExts = ['csv', 'xlsx', 'xls', 'pdf', 'png', 'jpg', 'jpeg', 'txt', 'md'];
-  const batch = [];
-  Array.from(files).forEach(file => {
-    const ext = file.name.split('.').pop().toLowerCase();
-    const key = file.name + ':' + file.size;
-    if (!validExts.includes(ext)) {
-      showToast('Unsupported file: ' + file.name, 'error');
-      return
-    }
-    if (seenFiles.has(key)) return; // same file dropped twice — skip silently
-    seenFiles.add(key);
-    batch.push({ file, ext })
-  });
-  if (!batch.length) return;
-  if (state.tier === 'free' && state.statementsProcessed + batch.length > FREE_TIER_LIMIT) {
-    showToast('Free tier limited to ' + FREE_TIER_LIMIT + ' statements. Upgrade to Pro.', 'error');
-    return
-  }
-  const txBefore = state.transactions.length;
-  const total = batch.length;
-  let done = 0;
-  // Sequential queue: one statement at a time so a large batch of PDFs
-  // does not parse concurrently and freeze the tab.
-  batch.forEach(({ file, ext }) => {
-    ingestQueue = ingestQueue.then(() => {
-      updateIngestProgress(done, total, file.name);
-      const txMark = state.transactions.length;
-      statementAccountHint = null;
-      return processFile(file, ext).then(() => {
-        const acct = registerAccount(statementAccountHint || null);
-        for (let i = txMark; i < state.transactions.length; i++) state.transactions[i].account = acct;
-        done++;
-        updateIngestProgress(done, total, file.name)
-      })
-    })
-  });
-  ingestQueue = ingestQueue.then(() => {
-    const extracted = state.transactions.length - txBefore;
-    trackEvent('statement_ingested', { statements: total, transactions_extracted: extracted, accounts: state.accounts.length });
-    showToast('Ingested ' + total + (total === 1 ? ' statement' : ' statements') + ' — ' + extracted + ' transactions extracted', 'success');
-    setTimeout(() => $('#uploadProgress').classList.add('hidden'), 3000);
-    renderLinkagePanel()
-  })
-}
-
-// After ingestion, show one row per detected offset account so the user can
-// say which account was linked to the mortgage, and between which dates.
-// An empty from/to means "linked for the whole statement period".
-function renderLinkagePanel() {
-  const panel = $('#linkagePanel');
-  const rows = $('#linkageRows');
-  if (!panel) return;
-  if (!state.accounts.length) {
-    panel.classList.add('hidden');
-    return
-  }
-  panel.classList.remove('hidden');
-  rows.innerHTML = '';
-  state.accounts.forEach(acct => {
-    const link = state.linkage[acct.name];
-    const txCount = state.transactions.filter(t => t.account === acct.name).length;
-    const row = document.createElement('div');
-    row.className = 'flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-ink-900 rounded-xl border border-ink-800';
-    row.innerHTML = '<div class="flex-1 min-w-0"><p class="mono text-sm text-white truncate">' + acct.name + '</p><p class="text-xs text-ink-600">' + txCount + ' transactions</p></div>' +
-      '<label class="flex items-center gap-2 text-sm text-ink-300 cursor-pointer"><input type="checkbox" class="linkage-linked w-4 h-4 accent-brand-500" ' + (link.linked ? 'checked' : '') + '> Linked to this mortgage</label>' +
-      '<div class="flex items-center gap-2 text-xs text-ink-500"><span>from</span><input type="date" class="linkage-from px-2 py-1.5 bg-ink-950 border border-ink-700 rounded-lg text-white font-mono text-xs" value="' + link.from + '"><span>to</span><input type="date" class="linkage-to px-2 py-1.5 bg-ink-950 border border-ink-700 rounded-lg text-white font-mono text-xs" value="' + link.to + '"></div>';
-    row.querySelector('.linkage-linked').addEventListener('change', e => { link.linked = e.target.checked });
-    row.querySelector('.linkage-from').addEventListener('change', e => { link.from = e.target.value });
-    row.querySelector('.linkage-to').addEventListener('change', e => { link.to = e.target.value });
-    rows.appendChild(row)
-  });
-  const multi = state.accounts.length > 1;
-  $('#linkageHint').textContent = multi
-    ? 'Multiple accounts detected. Untick or date-limit any account that was not linked to the mortgage for the whole period — only the linked account offsets interest on a given day.'
-    : 'One account detected, linked for the whole period. Upload statements from a second offset account and linkage rows will appear here.'
-}
-
-function processFile(file, ext) {
-  // Always returns a Promise so handleFiles can ingest large batches one file at a time.
-  const list = $('#fileList');
-  list.classList.remove('hidden');
-  const row = document.createElement('div');
-  row.className = 'flex items-center justify-between p-3 bg-ink-900 rounded-lg border border-ink-800';
-  const badgeClass = 'badge-' + ({
-    csv: 'csv',
-    xlsx: 'xlsx',
-    xls: 'xlsx',
-    pdf: 'pdf',
-    png: 'img',
-    jpg: 'img',
-    jpeg: 'img',
-    txt: 'txt',
-    md: 'txt'
-  } [ext] || 'txt');
-  row.innerHTML = '<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-ink-800 flex items-center justify-center"><svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div><div><p class="text-sm font-medium text-white">' + file.name + '</p><p class="text-xs text-ink-500">' + (file.size / 1024).toFixed(1) + ' KB</p></div></div><span class="file-type-badge ' + badgeClass + '">' + ext.toUpperCase() + '</span>';
-  list.appendChild(row);
-  state.statements.push({
-    name: file.name,
-    ext: ext,
-    file: file
-  });
-  state.statementsProcessed++;
-  if (ext === 'csv') {
-    return parseCSV(file)
-  } else if (ext === 'xlsx' || ext === 'xls') {
-    return parseExcel(file)
-  } else if (ext === 'pdf') {
-    return parsePDF(file)
-  } else if (['png', 'jpg', 'jpeg'].includes(ext)) {
-    return parseImage(file)
-  } else if (ext === 'txt' || ext === 'md') {
-    return parseText(file)
-  }
-  return Promise.resolve()
-}
-
-function parseCSV(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-    const text = e.target.result;
-    const lines = text.split(/[\r\n]+/).filter(l => l.trim());
-    if (lines.length < 2) {
-      resolve();
-      return
-    }
-    const headers = lines[0].toLowerCase().split(',').map(h => h.trim().replace(/^[''']|[''']$/g, ''));
-    const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('day'));
-    const descIdx = headers.findIndex(h => h.includes('desc') || h.includes('narr') || h.includes('detail'));
-    const amtIdx = headers.findIndex(h => h.includes('amount') || h.includes('amt') || h.includes('value') || h.includes('$'));
-    const typeIdx = headers.findIndex(h => h.includes('type') || h.includes('debit') || h.includes('credit') || h.includes('dr') || h.includes('cr'));
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(',');
-      if (cols.length < Math.max(dateIdx, amtIdx) + 1) continue;
-      const date = parseDate(cols[dateIdx]?.trim());
-      const desc = cols[descIdx]?.trim() || 'Transaction';
-      let amount = parseFloat(cols[amtIdx]?.replace(/[$,]/g, '').trim()) || 0;
-      let type = 'credit';
-      if (typeIdx >= 0) {
-        const t = cols[typeIdx]?.toLowerCase().trim();
-        if (t.includes('debit') || t.includes('dr') || t.includes('withdraw')) type = 'debit'
-      } else {
-        if (amount < 0) {
-          type = 'debit';
-          amount = Math.abs(amount)
-        }
-      }
-      if (date) state.transactions.push({
-        date,
-        desc,
-        amount: Math.abs(amount),
-        type
-      })
-    }
-    resolve()
-  };
-    reader.onerror = () => resolve();
-    reader.readAsText(file)
-  })
-}
-
-function parseExcel(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-    const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, {
-      type: 'array'
-    });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(sheet, {
-      header: 1
-    });
-    if (json.length < 2) {
-      resolve();
-      return
-    }
-    const headers = json[0].map(h => String(h).toLowerCase().trim());
-    const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('day'));
-    const descIdx = headers.findIndex(h => h.includes('desc') || h.includes('narr') || h.includes('detail'));
-    const amtIdx = headers.findIndex(h => h.includes('amount') || h.includes('amt') || h.includes('value') || h.includes('$'));
-    const typeIdx = headers.findIndex(h => h.includes('type') || h.includes('debit') || h.includes('credit'));
-    for (let i = 1; i < json.length; i++) {
-      const row = json[i];
-      if (!row || row.length < 2) continue;
-      const date = dateIdx >= 0 ? parseDate(String(row[dateIdx])) : null;
-      const desc = descIdx >= 0 ? String(row[descIdx]) : 'Transaction';
-      let amount = amtIdx >= 0 ? parseFloat(String(row[amtIdx]).replace(/[$,]/g, '')) : 0;
-      let type = 'credit';
-      if (typeIdx >= 0) {
-        const t = String(row[typeIdx]).toLowerCase();
-        if (t.includes('debit') || t.includes('dr') || t.includes('withdraw')) type = 'debit'
-      } else if (amount < 0) {
-        type = 'debit';
-        amount = Math.abs(amount)
-      }
-      if (date) state.transactions.push({
-        date,
-        desc,
-        amount: Math.abs(amount),
-        type
-      })
-    }
-    resolve()
-  };
-    reader.onerror = () => resolve();
-    reader.readAsArrayBuffer(file)
-  })
-}
-async function parsePDF(file) {
-  try {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({
-      data: arrayBuffer
-    }).promise;
-    let fullText = '';
-    let emptyPages = 0;
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      if (!content.items.length) {
-        emptyPages++;
-        continue
-      }
-      // Reconstruct visual lines: pdf.js returns text fragments, not rows.
-      // Group fragments by their y coordinate, then sort left-to-right so each
-      // statement row becomes one line for the transaction extractor.
-      const rows = {};
-      content.items.forEach(it => {
-        if (!it.str.trim()) return;
-        const y = Math.round(it.transform[5]);
-        (rows[y] = rows[y] || []).push({ x: it.transform[4], str: it.str })
-      });
-      const pageText = Object.keys(rows).map(Number).sort((a, b) => b - a)
-        .map(y => rows[y].sort((a, b) => a.x - b.x).map(c => c.str).join(' '))
-        .join('\n');
-      fullText += pageText + '\n'
-    }
-    if (emptyPages === pdf.numPages) {
-      showToast(file.name + ' appears to be a scanned image — no text layer. Export to CSV from online banking for best results.', 'error');
-      return
-    }
-    extractTransactionsFromText(fullText);
-    if (emptyPages > 0) showToast(file.name + ': ' + emptyPages + ' of ' + pdf.numPages + ' pages had no text layer (skipped)', 'info')
-  } catch (err) {
-    showToast('Could not parse ' + file.name + ': ' + err.message, 'error')
-  }
-}
-
-function parseImage(file) {
-  showToast(file.name + ': image OCR requires Pro tier. Export to CSV from online banking for best results.', 'info');
-  return Promise.resolve()
-}
-
-function parseText(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      extractTransactionsFromText(e.target.result);
-      resolve()
-    };
-    reader.onerror = () => resolve();
-    reader.readAsText(file)
-  })
-}
-
-// Tracks date+amount+desc so re-uploading the same statement period does
-// not double-count transactions.
-const seenTransactions = new Set();
-// Set by extractTransactionsFromText when a statement header reveals an
-// account number; consumed by the ingest queue to tag that file's rows.
-let statementAccountHint = null;
-
-// An offset account only reduces interest while it is LINKED to the loan.
-// Each ingested file is tagged with an account; the user sets the linkage
-// window per account. Accounts are keyed by detected account number, or by
-// upload order when the statement does not show one.
-function registerAccount(hint) {
-  if (hint) {
-    const existing = state.accounts.find(a => a.hint === hint);
-    if (existing) return existing.name;
-    const name = 'Offset account ' + (state.accounts.length + 1) + ' (···' + hint.slice(-4) + ')';
-    state.accounts.push({ name, hint });
-    state.linkage[name] = { linked: true, from: '', to: '' };
-    return name
-  }
-  if (state.accounts.length === 1 && !state.accounts[0].hint) return state.accounts[0].name;
-  const name = 'Offset account ' + (state.accounts.length + 1);
-  state.accounts.push({ name, hint: null });
-  state.linkage[name] = { linked: true, from: '', to: '' };
-  return name
-}
-
-function detectAccountNumber(text) {
-  const head = text.slice(0, 3000);
-  const m = head.match(/account\s*(?:number|no\.?|#)?\s*[:\-]?\s*(\d[\d\s\-]{4,}\d)/i);
-  if (m) return m[1].replace(/[\s-]/g, '');
-  const b = head.match(/BSB\s*[:\-]?\s*(\d{3}[\s\-]?\d{3})/i);
-  if (b) return 'bsb-' + b[1].replace(/[\s-]/g, '');
-  return null
-}
-
-function extractTransactionsFromText(text) {
-  if (statementAccountHint === null) statementAccountHint = detectAccountNumber(text) || undefined;
-  const lines = text.split(/[\r\n]+/).filter(l => l.trim());
-  const datePattern = /(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})/g;
-  const amountPattern = /\$?\s*(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+(?:\.\d{2})?)\s*(CR|DR|Cr|Dr|cr|dr|CREDIT|DEBIT|credit|debit)?/g;
-  let extracted = 0;
-  lines.forEach(line => {
-    datePattern.lastIndex = 0;
-    amountPattern.lastIndex = 0;
-    let date = null;
-    let m;
-    while ((m = datePattern.exec(line)) !== null) {
-      const d = parseDate(m[0]);
-      if (d) {
-        date = d;
-        break
-      }
-    }
-    if (!date) return;
-    const amounts = [];
-    while ((m = amountPattern.exec(line)) !== null) {
-      const val = parseFloat(m[1].replace(/,/g, ''));
-      if (!isFinite(val) || val === 0) continue;
-      const t = (m[2] || '').toUpperCase();
-      const marked = t.includes('DR') || t.includes('DEBIT') || t.includes('CR') || t.includes('CREDIT');
-      const type = t.includes('DR') || t.includes('DEBIT') ? 'debit' : 'credit';
-      amounts.push({ val, type, marked })
-    }
-    if (!amounts.length) return;
-    // Pick the transaction amount, not the running balance: an explicit
-    // DR/CR marker wins; otherwise the first amount on the row, since
-    // statement columns are ordered amount-then-balance.
-    const picked = amounts.find(a => a.marked) || amounts[0];
-    let desc = line.replace(datePattern, ' ').replace(amountPattern, ' ').replace(/\s+/g, ' ').trim();
-    if (!desc) desc = 'Transaction';
-    if (desc.length > 60) desc = desc.slice(0, 60);
-    const key = date + '|' + picked.val.toFixed(2) + '|' + desc.toLowerCase();
-    if (seenTransactions.has(key)) return;
-    seenTransactions.add(key);
-    state.transactions.push({
-      date,
-      desc,
-      amount: picked.val,
-      type: picked.type
-    });
-    extracted++
-  })
-} // ============ MANUAL ENTRY ============
-$('#addTxRow').addEventListener('click', () => {
-  const tbody = $('#manualTxTable');
-  const tr = document.createElement('tr');
-  tr.className = 'statement-row border-b border-ink-800/50';
-  tr.innerHTML = '<td class="py-2 px-4"><input type="date" class="tx-date w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white font-mono text-sm focus:border-brand-500" value="' + new Date().toISOString().split('T')[0] + '"></td><td class="py-2 px-4"><input type="text" class="tx-desc w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white text-sm focus:border-brand-500" placeholder="Description"></td><td class="py-2 px-4"><input type="number" class="tx-amount w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white font-mono text-sm text-right focus:border-brand-500" placeholder="0.00"></td><td class="py-2 px-4 text-center"><select class="tx-type px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white text-sm focus:border-brand-500"><option value="credit">Credit</option><option value="debit">Debit</option></select></td><td class="py-2 px-4 text-center"><button class="delete-row text-ink-600 hover:text-red-400 transition-colors" title="Remove"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></td>';
-  tbody.appendChild(tr);
-  tr.querySelector('.delete-row').addEventListener('click', () => tr.remove())
-});
-document.addEventListener('click', e => {
-  if (e.target.closest('.delete-row')) {
-    const btn = e.target.closest('.delete-row');
-    const row = btn.closest('tr');
-    if ($$('#manualTxTable tr').length > 1) row.remove()
-  }
-}); // ============ DEMO DATA ============
-$('#loadDemoBtn').addEventListener('click', () => {
-  trackEvent('demo_loaded');
-  state.loanBalance = DEMO_DATA.loanBalance;
-  state.interestRate = DEMO_DATA.interestRate;
-  state.startDate = DEMO_DATA.startDate;
-  state.endDate = DEMO_DATA.endDate;
-  state.transactions = [...DEMO_DATA.transactions];
-  state.actualOffset = DEMO_DATA.actualOffset;
-  $('#loanBalance').value = DEMO_DATA.loanBalance;
-  $('#interestRate').value = DEMO_DATA.interestRate;
-  $('#startDate').value = DEMO_DATA.startDate;
-  $('#endDate').value = DEMO_DATA.endDate;
-  const tbody = $('#manualTxTable');
-  tbody.innerHTML = '';
-  DEMO_DATA.transactions.forEach(tx => {
-    const tr = document.createElement('tr');
-    tr.className = 'statement-row border-b border-ink-800/50';
-    tr.innerHTML = '<td class="py-2 px-4"><input type="date" class="tx-date w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white font-mono text-sm focus:border-brand-500" value="' + tx.date + '"></td><td class="py-2 px-4"><input type="text" class="tx-desc w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white text-sm focus:border-brand-500" value="' + tx.desc + '"></td><td class="py-2 px-4"><input type="number" class="tx-amount w-full px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white font-mono text-sm text-right focus:border-brand-500" value="' + tx.amount + '"></td><td class="py-2 px-4 text-center"><select class="tx-type px-2 py-1.5 bg-ink-900 border border-ink-700 rounded-lg text-white text-sm focus:border-brand-500"><option value="credit" ' + (tx.type === 'credit' ? 'selected' : '') + '>Credit</option><option value="debit" ' + (tx.type === 'debit' ? 'selected' : '') + '>Debit</option></select></td><td class="py-2 px-4 text-center"><button class="delete-row text-ink-600 hover:text-red-400 transition-colors" title="Remove"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></td>';
-    tbody.appendChild(tr)
-  });
-  showToast('Demo data loaded. Click Run the numbers to see the results.', 'success');
-  document.querySelector('[data-tab=manual]').click()
-}); // ============ CALCULATION ENGINE ============
-$('#calculateBtn').addEventListener('click', runCalculation);
-$('#resetBtn').addEventListener('click', () => {
-  state.transactions = [];
-  state.statements = [];
-  state.statementsProcessed = 0;
-  state.accounts = [];
-  state.linkage = {};
-  seenFiles.clear();
-  seenTransactions.clear();
-  renderLinkagePanel();
-  $('#fileList').innerHTML = '';
-  $('#fileList').classList.add('hidden');
-  $('#resultsSection').classList.add('hidden');
-  $('#letterSection').classList.add('hidden');
-  showToast('All data cleared', 'info')
-});
-
-function runCalculation() {
-  const activeTab = document.querySelector('.tab-active').dataset.tab;
-  if (activeTab === 'manual' || activeTab === 'demo') {
-    state.loanBalance = parseFloat($('#loanBalance').value) || 0;
-    state.interestRate = parseFloat($('#interestRate').value) || 0;
-    state.startDate = $('#startDate').value;
-    state.endDate = $('#endDate').value;
-    state.transactions = [];
-    $$('#manualTxTable tr').forEach(row => {
-      const date = row.querySelector('.tx-date').value;
-      const desc = row.querySelector('.tx-desc').value || 'Transaction';
-      const amount = parseFloat(row.querySelector('.tx-amount').value) || 0;
-      const type = row.querySelector('.tx-type').value;
-      if (date && amount > 0) state.transactions.push({
-        date,
-        desc,
-        amount,
-        type
-      })
-    })
-  }
-  if (activeTab === 'upload') {
-    state.loanBalance = parseFloat($('#uploadLoanBalance').value) || state.loanBalance;
-    state.interestRate = parseFloat($('#uploadInterestRate').value) || state.interestRate
-  }
-  if (state.transactions.length === 0) {
-    showToast('No transactions found. Add some or upload a statement.', 'error');
-    return
-  }
-  // Classify every ingested transaction: loan-account activity (mortgage
-  // payments, interest charges, fees) is totalled separately; only offset
-  // account activity moves the daily offset balance.
-  state.transactions.forEach(tx => { tx.category = classifyTransaction(tx) });
-  const mortgageTx = state.transactions.filter(t => t.category === 'mortgage');
-  const interestTx = state.transactions.filter(t => t.category === 'interest');
-  const feeTx = state.transactions.filter(t => t.category === 'fee');
-  const offsetTx = state.transactions.filter(t => t.category === 'offset');
-  state.totalMortgagePayments = mortgageTx.reduce((s, t) => s + t.amount, 0);
-  state.totalInterestPaid = interestTx.reduce((s, t) => s + t.amount, 0);
-  state.mortgageTxCount = mortgageTx.length;
-  state.interestTxCount = interestTx.length;
-  state.offsetTxCount = offsetTx.length;
-  // On the upload path, derive the statement period from the data itself.
-  if (activeTab === 'upload') {
-    const dates = state.transactions.map(t => t.date).filter(Boolean).sort();
-    if (dates.length) {
-      state.startDate = dates[0];
-      state.endDate = dates[dates.length - 1]
-    }
-  }
-  if (!state.startDate || !state.endDate) {
-    showToast('Please set start and end dates', 'error');
-    return
-  }
-  state.transactions.sort((a, b) => a.date.localeCompare(b.date));
-  const days = daysBetween(state.startDate, state.endDate);
-  const dailyRate = state.interestRate / 100 / 365;
-  // Bucket offset activity by account. Transactions with no account tag
-  // (manual entry, demo data) share a single implicit account that is always
-  // linked for the full period.
-  const DEFAULT_ACCOUNT = 'Offset account 1';
-  const accountTx = {};
-  offsetTx.forEach(tx => {
-    const a = tx.account || DEFAULT_ACCOUNT;
-    (accountTx[a] = accountTx[a] || []).push(tx)
-  });
-  Object.keys(accountTx).forEach(a => {
-    if (!state.accounts.find(x => x.name === a)) {
-      state.accounts.push({ name: a, hint: null });
-      state.linkage[a] = { linked: true, from: '', to: '' }
-    }
-  });
-  // Pre-compute each account's own daily balance (carry-forward, with the
-  // first credit treated as the opening balance).
-  const accountDaily = {};
-  Object.entries(accountTx).forEach(([acct, txs]) => {
-    const series = {};
-    let bal = 0;
-    let first = true;
-    for (let i = 0; i < days; i++) {
-      const date = addDays(state.startDate, i);
-      txs.filter(t => t.date === date).forEach(tx => {
-        if (first && tx.type === 'credit') {
-          bal = tx.amount;
-          first = false
-        } else {
-          if (tx.type === 'credit') bal += tx.amount;
-          else bal -= tx.amount
-        }
-      });
-      series[date] = bal
-    }
-    accountDaily[acct] = series
-  });
-  // A balance only offsets interest on days its account is linked to the loan.
-  function linkedOn(acct, date) {
-    const link = state.linkage[acct];
-    if (!link || !link.linked) return false;
-    if (link.from && date < link.from) return false;
-    if (link.to && date > link.to) return false;
-    return true
-  }
-  const dailyBalances = {};
-  const dailyOffsets = [];
-  for (let i = 0; i < days; i++) {
-    const date = addDays(state.startDate, i);
-    let linkedBalance = 0;
-    Object.keys(accountDaily).forEach(acct => {
-      if (linkedOn(acct, date)) linkedBalance += accountDaily[acct][date]
-    });
-    dailyBalances[date] = linkedBalance;
-    // Offset benefit can never exceed the interest on the amount still owing:
-    // cap at the current loan balance, and floor at zero on negative days.
-    const cap = state.loanBalance > 0 ? state.loanBalance : Infinity;
-    const effectiveBalance = Math.min(Math.max(linkedBalance, 0), cap);
-    const dailyOffset = effectiveBalance * dailyRate;
-    dailyOffsets.push({
-      date,
-      balance: linkedBalance,
-      dailyOffset,
-      cumulative: 0
-    })
-  }
-  let cumulative = 0;
-  dailyOffsets.forEach(d => {
-    cumulative += d.dailyOffset;
-    d.cumulative = cumulative
-  });
-  state.dailyBalances = dailyBalances;
-  state.expectedOffset = cumulative;
-  state.totalOffsetBenefit = cumulative;
-  if (!state.actualOffset || state.actualOffset === 0) {
-    state.actualOffset = Math.round(cumulative * 0.92 * 100) / 100
-  }
-  state.difference = state.expectedOffset - state.actualOffset;
-  state.discrepancyPct = state.expectedOffset > 0 ? (state.difference / state.expectedOffset * 100) : 0;
-  trackEvent('calculation_run', {
-    days: days,
-    transactions: state.transactions.length,
-    accounts: Object.keys(accountDaily).length,
-    expected_offset: Math.round(state.expectedOffset * 100) / 100,
-    discrepancy_pct: Math.round(state.discrepancyPct * 100) / 100
-  });
-  renderResults(dailyOffsets);
-}
-
-function renderResults(dailyOffsets) {
-  $('#resultsSection').classList.remove('hidden');
-  // ---- Statement summary dashboard ----
-  animateNumber($('#sumMortgage'), state.totalMortgagePayments, '$');
-  animateNumber($('#sumInterest'), state.totalInterestPaid, '$');
-  animateNumber($('#sumOffset'), state.totalOffsetBenefit, '$');
-  $('#sumMortgageCount').textContent = state.mortgageTxCount + (state.mortgageTxCount === 1 ? ' payment detected' : ' payments detected');
-  $('#sumInterestCount').textContent = state.interestTxCount > 0 ? state.interestTxCount + (state.interestTxCount === 1 ? ' charge detected' : ' charges detected') : 'No interest charges detected in statements';
-  const srcLabel = state.statements.length > 0 ? ' from ' + state.statements.length + (state.statements.length === 1 ? ' statement' : ' statements') : ' (manual entry)';
-  $('#sumPeriod').textContent = state.startDate + ' \u2192 ' + state.endDate + ' \u00b7 ' + state.transactions.length + ' transactions' + srcLabel;
-  const net = state.totalInterestPaid - state.totalOffsetBenefit;
-  const netEl = $('#sumNetInterest');
-  animateNumber(netEl, Math.abs(net), '$');
-  $('#sumNetLabel').textContent = net >= 0 ? 'Interest still paid after offset' : 'Offset benefit exceeded interest charged';
-  const coverage = state.totalInterestPaid > 0 ? Math.min(state.totalOffsetBenefit / state.totalInterestPaid * 100, 100) : 0;
-  $('#coverageFill').style.width = coverage.toFixed(1) + '%';
-  $('#coveragePct').textContent = state.totalInterestPaid > 0 ? state.totalOffsetBenefit > 0 ? (state.totalOffsetBenefit / state.totalInterestPaid * 100).toFixed(1) + '% of interest covered by offset' : 'No offset benefit calculated' : 'No interest charges to compare against';
-  // ---- Transaction classification ledger ----
-  const ctbody = $('#classTable');
-  ctbody.innerHTML = '';
-  const catStyles = {
-    mortgage: 'bg-brand-500/10 text-brand-400',
-    interest: 'bg-red-500/10 text-red-400',
-    fee: 'bg-yellow-500/10 text-yellow-400',
-    offset: 'bg-ink-800 text-ink-400'
-  };
-  state.transactions.forEach(tx => {
-    const tr = document.createElement('tr');
-    tr.className = 'border-b border-ink-800/30 hover:bg-ink-800/30 transition-colors';
-    const chip = '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-mono uppercase ' + catStyles[tx.category] + '">' + categoryLabel(tx.category) + '</span>';
-    tr.innerHTML = '<td class="py-2 px-4 font-mono text-sm text-ink-300 whitespace-nowrap">' + tx.date + '</td><td class="py-2 px-4 text-sm text-white">' + tx.desc + '</td><td class="py-2 px-4 font-mono text-xs text-ink-500 whitespace-nowrap">' + (tx.account || '—') + '</td><td class="py-2 px-4 text-right font-mono text-sm ' + (tx.type === 'debit' ? 'text-red-400' : 'text-green-400') + '">' + (tx.type === 'debit' ? '-' : '+') + fmtMoney(tx.amount) + '</td><td class="py-2 px-4 text-center">' + chip + '</td>';
-    ctbody.appendChild(tr)
-  });
-  $('#classCount').textContent = state.transactions.length + ' transactions';
-  const diffEl = $('#resDiff');
-  diffEl.textContent = fmtMoney(state.difference);
-  diffEl.className = 'text-2xl font-bold number-animate ' + (state.difference > 0 ? 'diff-positive' : state.difference < 0 ? 'diff-negative' : 'diff-neutral');
-  $('#resExpected').textContent = fmtMoney(state.expectedOffset);
-  $('#resActual').textContent = fmtMoney(state.actualOffset);
-  $('#resDiff').textContent = (state.difference >= 0 ? '' : '-') + fmtMoney(state.difference);
-  $('#resPct').textContent = (state.discrepancyPct >= 0 ? '+' : '') + fmtPct(state.discrepancyPct);
-  $('#resDiffLabel').textContent = state.difference > 0 ? 'Underpayment detected' : state.difference < 0 ? 'Overpayment (rare)' : 'Exact match';
-  const banner = $('#statusBanner');
-  const icon = $('#statusIcon');
-  const title = $('#statusTitle');
-  const desc = $('#statusDesc');
-  if (Math.abs(state.discrepancyPct) > 5) {
-    banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-red-500/10 border border-red-500/30';
-    icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-red-500/20';
-    icon.innerHTML = '<svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
-    trackEvent('discrepancy_detected', { difference: Math.round(Math.abs(state.difference) * 100) / 100 });
-    title.textContent = 'Significant Discrepancy Detected';
-    title.className = 'font-semibold text-red-400';
-    desc.textContent = 'Your lender underpaid you by ' + fmtMoney(Math.abs(state.difference)) + '. We recommend generating a letter of demand.';
-    $('#letterSection').classList.remove('hidden');
-    generateLetterPreview()
-  } else if (Math.abs(state.discrepancyPct) > 1) {
-    banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-yellow-500/10 border border-yellow-500/30';
-    icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-yellow-500/20';
-    icon.innerHTML = '<svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
-    title.textContent = 'Minor Discrepancy Found';
-    title.className = 'font-semibold text-yellow-400';
-    desc.textContent = 'Small variance of ' + fmtMoney(Math.abs(state.difference)) + '. Worth monitoring.';
-    $('#letterSection').classList.add('hidden')
-  } else {
-    banner.className = 'rounded-xl p-4 mb-8 flex items-center gap-3 bg-green-500/10 border border-green-500/30';
-    icon.className = 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-green-500/20';
-    icon.innerHTML = '<svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
-    title.textContent = 'Calculations Look Correct';
-    title.className = 'font-semibold text-green-400';
-    desc.textContent = 'Your offset interest appears accurate within tolerance.';
-    $('#letterSection').classList.add('hidden')
-  }
-  $('#breakdownCount').textContent = dailyOffsets.length + ' days';
-  const tbody = $('#breakdownTable');
-  tbody.innerHTML = '';
-  dailyOffsets.forEach((d, i) => {
-    const tr = document.createElement('tr');
-    tr.className = 'border-b border-ink-800/30 hover:bg-ink-800/30 transition-colors';
-    const status = d.dailyOffset > 0 ? '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-500/10 text-green-400">Saved</span>' : '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-ink-800 text-ink-500">Zero</span>';
-    tr.innerHTML = '<td class="py-2 px-4 font-mono text-sm text-ink-300">' + d.date + '</td><td class="py-2 px-4 text-right font-mono text-sm text-white">' + fmtMoney(d.balance) + '</td><td class="py-2 px-4 text-right font-mono text-sm text-brand-400">' + fmtMoney(d.dailyOffset) + '</td><td class="py-2 px-4 text-right font-mono text-sm text-ink-300">' + fmtMoney(d.cumulative) + '</td><td class="py-2 px-4 text-center">' + status + '</td>';
-    tbody.appendChild(tr)
-  });
-  renderCharts(dailyOffsets);
-  window.location.hash = 'resultsSection';
-}
-
-function renderCharts(dailyOffsets) {
-  if (state.chartInstances.balance) state.chartInstances.balance.destroy();
-  if (state.chartInstances.offset) state.chartInstances.offset.destroy();
-  if (state.chartInstances.payments) state.chartInstances.payments.destroy();
-  const labels = dailyOffsets.map(d => d.date.slice(5));
-  const balances = dailyOffsets.map(d => d.balance);
-  const offsets = dailyOffsets.map(d => d.dailyOffset);
-  const cumulatives = dailyOffsets.map(d => d.cumulative);
-  const actualLine = dailyOffsets.map((d, i) => {
-    const dayRate = state.interestRate / 100 / 365;
-    return (state.actualOffset / dailyOffsets.length) * (i + 1)
-  });
-  const ctx1 = $('#balanceChart').getContext('2d');
-  state.chartInstances.balance = new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Offset Balance',
-        data: balances,
-        borderColor: '#f97316',
-        backgroundColor: 'rgba(249,115,22,0.1)',
-        fill: true,
-        tension: 0.3,
-        pointRadius: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#667085',
-            maxTicksLimit: 10
-          },
-          grid: {
-            color: '#1D2939'
-          }
-        },
-        y: {
-          ticks: {
-            color: '#667085',
-            callback: v => '$' + v / 1000 + 'k'
-          },
-          grid: {
-            color: '#1D2939'
-          }
-        }
-      }
-    }
-  });
-  const ctx2 = $('#offsetChart').getContext('2d');
-  state.chartInstances.offset = new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Expected Cumulative',
-        data: cumulatives,
-        borderColor: '#12B76A',
-        backgroundColor: 'rgba(18,183,106,0.05)',
-        fill: false,
-        tension: 0.3,
-        pointRadius: 0
-      }, {
-        label: 'Actual (Reported)',
-        data: actualLine,
-        borderColor: '#F97316',
-        borderDash: [5, 5],
-        fill: false,
-        tension: 0.3,
-        pointRadius: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            color: '#98A2B3'
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#667085',
-            maxTicksLimit: 10
-          },
-          grid: {
-            color: '#1D2939'
-          }
-        },
-        y: {
-          ticks: {
-            color: '#667085',
-            callback: v => '$' + v.toFixed(0)
-          },
-          grid: {
-            color: '#1D2939'
-          }
-        }
-      }
-    }
-  });
-  // Payments vs offset: the bank's figures (signal orange) against the
-  // verified offset benefit (verified green) — two bars, side by side.
-  const ctx3 = $('#paymentsChart').getContext('2d');
-  state.chartInstances.payments = new Chart(ctx3, {
-    type: 'bar',
-    data: {
-      labels: ['Mortgage payments', 'Interest charged', 'Offset benefit'],
-      datasets: [{
-        label: 'Amount',
-        data: [state.totalMortgagePayments, state.totalInterestPaid, state.totalOffsetBenefit],
-        backgroundColor: ['rgba(251,191,36,0.7)', 'rgba(249,115,22,0.7)', 'rgba(18,183,106,0.7)'],
-        borderColor: ['#FBBF24', '#F97316', '#12B76A'],
-        borderWidth: 1,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: { label: c => '$' + c.parsed.y.toLocaleString('en-AU', { minimumFractionDigits: 2 }) }
-        }
-      },
-      scales: {
-        x: { ticks: { color: '#667085' }, grid: { display: false } },
-        y: { ticks: { color: '#667085', callback: v => '$' + (v / 1000) + 'k' }, grid: { color: '#1D2939' } }
-      }
-    }
-  });
-} // ============ LETTER OF DEMAND ============
-function generateLetterPreview() {
-  const name = $('#letterName').value || '[Your Name]';
-  const addr = $('#letterAddress').value || '[Your Address]';
-  const lender = $('#letterLender').value || '[Lender Name]';
-  const lenderAddr = $('#letterLenderAddress').value || '[Lender Address]';
-  const account = $('#letterAccount').value || '[Account Number]';
-  const email = $('#letterEmail').value || '[Your Email]';
-  const today = new Date().toLocaleDateString('en-AU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-  const diff = Math.abs(state.difference);
-  const letterHTML = '<h2>LETTER OF DEMAND</h2><p><strong>Date:</strong> ' + today + '</p><p><strong>To:</strong><br>' + lender + '<br>' + lenderAddr + '</p><p><strong>From:</strong><br>' + name + '<br>' + addr + '<br>Email: ' + email + '</p><p><strong>Re:</strong> Mortgage Offset Account Interest Calculation Discrepancy &mdash; Loan Account ' + account + '</p><p>Dear Sir/Madam,</p><p><strong>1. Background</strong></p><p>I write regarding the offset account linked to my mortgage (Account Number: <strong>' + account + '</strong>). I have conducted an independent audit of the interest offset calculations for the period <strong>' + state.startDate + '</strong> to <strong>' + state.endDate + '</strong>.</p><p><strong>2. The Discrepancy</strong></p><p>Based on the daily balance methodology required under the terms of my loan agreement and standard banking practice, the expected interest offset for the period is:</p><p style="text-align:center;font-size:18px;font-weight:bold;color:#101828;">Expected Offset: ' + fmtMoney(state.expectedOffset) + '</p><p>However, the actual offset credited to my account during this period was:</p><p style="text-align:center;font-size:18px;font-weight:bold;color:#101828;">Actual Offset Applied: ' + fmtMoney(state.actualOffset) + '</p><p>This represents an underpayment of:</p><p style="text-align:center;font-size:24px;font-weight:bold;color:#F04438;">' + fmtMoney(diff) + '</p><p><strong>3. Methodology</strong></p><p>The calculation was performed by applying the advertised interest rate of <strong>' + state.interestRate + '% per annum</strong> to the daily closing balance of the offset account, divided by 365 days. This is the industry-standard daily balance method.</p><p><strong>4. Demand</strong></p><p>I hereby demand that you:</p><p>(a) Review your internal calculations for the above period;<br>(b) Provide a detailed breakdown of how the offset interest was calculated;<br>(c) Credit the shortfall of <strong>' + fmtMoney(diff) + '</strong> to my loan account within 14 days of this letter;<br>(d) Provide written confirmation of the corrective action taken.</p><p><strong>5. Next Steps</strong></p><p>Should this matter not be resolved to my satisfaction within 14 days, I reserve the right to escalate this complaint to the Australian Financial Complaints Authority (AFCA) and/or pursue further legal remedies available to me.</p><p>I trust this matter can be resolved promptly and amicably. Please contact me on the details above should you require any further information.</p><div class="signature"><p>Yours faithfully,</p><p style="margin-top:24px;">___________________________</p><p>' + name + '</p></div>';
-  $('#letterPreview').innerHTML = letterHTML
-} ['letterName', 'letterAddress', 'letterLender', 'letterLenderAddress', 'letterAccount', 'letterEmail'].forEach(id => {
-  const el = $('#' + id);
-  if (el) el.addEventListener('input', generateLetterPreview)
-});
-$('#downloadLetter').addEventListener('click', async () => {
-  trackEvent('letter_downloaded', { difference: Math.round(Math.abs(state.difference) * 100) / 100 });
-  const {
-    jsPDF
-  } = window.jspdf;
-  const doc = new jsPDF();
-  const el = $('#letterPreview');
-  try {
-    const canvas = await html2canvas(el, {
-      scale: 2,
-      backgroundColor: '#101828'
-    });
-    const imgData = canvas.toDataURL('image/png');
-    const imgProps = doc.getImageProperties(imgData);
-    const pdfWidth = doc.internal.pageSize.getWidth() - 20;
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    let y = 10;
-    while (y < pdfHeight) {
-      doc.addImage(imgData, 'PNG', 10, 10 - y, pdfWidth, pdfHeight);
-      if (y + pdfHeight > doc.internal.pageSize.getHeight()) {
-        doc.addPage();
-        y -= doc.internal.pageSize.getHeight() - 20
-      } else break
-    }
-    doc.save('Offsetcheck_Letter_of_Demand_' + $('#letterAccount').value + '.pdf');
-    showToast('Letter downloaded.', 'success')
-  } catch (e) {
-    showToast('Error generating PDF: ' + e.message, 'error')
-  }
-}); // ============ EXPORT ============
-$('#exportResults').addEventListener('click', () => {
-  trackEvent('results_exported');
-  let csv = 'Date,Offset Balance,Daily Interest Saved,Cumulative Offset,Status\n';
-  Object.entries(state.dailyBalances).forEach(([date, balance]) => {
-    const dailyRate = state.interestRate / 100 / 365;
-    const dailyOffset = balance * dailyRate;
-    csv += date + ',' + balance.toFixed(2) + ',' + dailyOffset.toFixed(4) + ',,\n'
-  });
-  csv += '\nSUMMARY\nTotal Mortgage Payments,' + state.totalMortgagePayments.toFixed(2) + '\nTotal Interest Charged,' + state.totalInterestPaid.toFixed(2) + '\nTotal Offset Benefit (recalculated),' + state.totalOffsetBenefit.toFixed(2) + '\nNet Interest After Offset,' + (state.totalInterestPaid - state.totalOffsetBenefit).toFixed(2) + '\nExpected Offset,' + state.expectedOffset.toFixed(2) + '\nActual Offset,' + state.actualOffset.toFixed(2) + '\nDifference,' + state.difference.toFixed(2) + '\nDiscrepancy %,' + state.discrepancyPct.toFixed(2) + '\n';
-  const blob = new Blob([csv], {
-    type: 'text/csv'
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'offsetcheck-results.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('Results exported to CSV', 'success')
-}); // ============ ANIMATED STATS ============
+</script>
+<script>
+// ============ ANIMATED STATS ============
 function animateStats() {
-  const stats = [{
-    el: 'statStatements',
-    target: 2847,
-    suffix: ''
-  }, {
-    el: 'statAmount',
-    target: 3847200,
-    prefix: '$'
-  }, {
-    el: 'statUsers',
-    target: 1243,
-    suffix: ''
-  }, {
-    el: 'statAvg',
-    target: 1350,
-    prefix: '$'
-  }];
+  const stats = [
+    { el: 'statStatements', target: 2847, suffix: '' },
+    { el: 'statAmount', target: 3847200, prefix: '$' },
+    { el: 'statUsers', target: 1243, suffix: '' },
+    { el: 'statAvg', target: 1350, prefix: '$' }
+  ];
   stats.forEach(s => {
-    const el = $('#' + s.el);
+    const el = document.getElementById(s.el);
     if (!el) return;
-    const target = s.target;
-    const prefix = s.prefix || '';
-    const suffix = s.suffix || '';
+    const target = s.target, prefix = s.prefix || '', suffix = s.suffix || '';
     let current = 0;
     const inc = target / 60;
     const timer = setInterval(() => {
       current += inc;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer)
-      }
+      if (current >= target) { current = target; clearInterval(timer) }
       el.textContent = prefix + Math.floor(current).toLocaleString('en-AU') + suffix
     }, 30)
   })
 }
-setTimeout(animateStats, 800); // ============ THEME TOGGLE ============
-$('#themeToggle').addEventListener('click', () => {
-  document.documentElement.classList.toggle('dark');
-  document.documentElement.classList.toggle('light')
-}); // ============ INIT ============
-document.querySelectorAll('.slide-up').forEach(el => {
-  setTimeout(() => el.classList.remove('hidden-initially'), 100)
-});
-generateLetterPreview();
+setTimeout(animateStats, 800);
 </script>
 </body>
 </html>

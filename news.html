@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In the news — why Offsetcheck exists | Offsetcheck</title>
+<meta name="description" content="ASIC found Australian banks paid over $55 million in compensation for mortgage offset failures. The reporting and research behind Offsetcheck — plus resources to check your own offset account.">
+<link rel="canonical" href="https://offsetcheck.com/news.html">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Offsetcheck">
+<meta property="og:url" content="https://offsetcheck.com/news.html">
+<meta property="og:title" content="In the news — why Offsetcheck exists | Offsetcheck">
+<meta property="og:description" content="ASIC found Australian banks paid over $55 million in compensation for mortgage offset failures. The reporting and research behind Offsetcheck — plus resources to check your own offset account.">
+<meta property="og:image" content="https://offsetcheck.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Offsetcheck — Keeping the bankers honest.">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="In the news — why Offsetcheck exists | Offsetcheck">
+<meta name="twitter:description" content="ASIC found Australian banks paid over $55 million in compensation for mortgage offset failures. The reporting and research behind Offsetcheck — plus resources to check your own offset account.">
+<meta name="twitter:image" content="https://offsetcheck.com/og-image.png">
+<meta name="twitter:image:alt" content="Offsetcheck — Keeping the bankers honest.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YQVM2K0Z66"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments) }
+  gtag('js', new Date());
+  gtag('config', 'G-YQVM2K0Z66');
+  // Fire a product event only when analytics is live.
+  function trackEvent(name, params) {
+    if (window.dataLayer) gtag('event', name, params || {})
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      },
+      colors: {
+        brand: { 50: '#FFFAEB', 100: '#FEF3C7', 200: '#FDE68A', 300: '#FCD34D', 400: '#FBBF24', 500: '#F97316', 600: '#EA580C', 700: '#C2410C', 800: '#9A3412', 900: '#7C2D12' },
+        ink: { 50: '#F9FAFB', 100: '#F2F4F7', 200: '#E4E7EC', 300: '#D0D5DD', 400: '#98A2B3', 500: '#667085', 600: '#475467', 700: '#344054', 800: '#1D2939', 900: '#101828', 950: '#0C111D' }
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0C111D; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #344054; border-radius: 3px; }
+  .gradient-text { background: linear-gradient(135deg, #FBBF24 0%, #F97316 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .glass { background: rgba(24, 24, 27, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(63, 63, 70, 0.4); }
+  .glow { box-shadow: 0 0 40px rgba(249, 115, 22, 0.08); }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .tab-active { background: #F97316; color: #0C111D; }
+  .tab-inactive { color: #98A2B3; }
+  .tab-inactive:hover { color: #fff; }
+  .progress-bar { height: 6px; background: #1D2939; border-radius: 999px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #FBBF24, #F97316); border-radius: 999px; transition: width 0.3s ease; }
+  .coverage-track { height: 10px; background: #1D2939; border-radius: 999px; overflow: hidden; }
+  .coverage-fill { height: 100%; background: linear-gradient(90deg, #FBBF24, #F97316); border-radius: 999px; transition: width 0.8s ease; }
+  .file-type-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .badge-csv { background: rgba(18, 183, 106, 0.12); color: #12B76A; }
+  .badge-xlsx { background: rgba(59, 130, 246, 0.12); color: #3B82F6; }
+  .badge-pdf { background: rgba(240, 68, 56, 0.12); color: #F04438; }
+  .badge-img { background: rgba(247, 144, 9, 0.12); color: #F79009; }
+  .badge-txt { background: rgba(152, 162, 179, 0.12); color: #98A2B3; }
+  #dropZone.drag-active { border-color: #F97316; background: rgba(249, 115, 22, 0.08); }
+  .toast { padding: 12px 18px; border-radius: 12px; margin-top: 8px; font-size: 14px; font-weight: 500; color: #fff; background: #1D2939; border: 1px solid #344054; animation: toastIn 0.3s ease; max-width: 360px; }
+  .toast-success { border-color: rgba(18, 183, 106, 0.5); background: rgba(18, 183, 106, 0.12); color: #A6F4C5; }
+  .toast-error { border-color: rgba(240, 68, 56, 0.5); background: rgba(240, 68, 56, 0.12); color: #FDA29B; }
+  .toast-info { border-color: rgba(249, 115, 22, 0.5); background: rgba(249, 115, 22, 0.12); color: #FDE68A; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  #toastContainer { position: fixed; top: 16px; right: 16px; z-index: 100; }
+  .diff-positive { color: #F04438; }
+  .diff-negative { color: #12B76A; }
+  .diff-neutral { color: #fff; }
+  .letter-preview { background: #F9FAFB; color: #101828; padding: 32px; font-size: 14px; line-height: 1.7; }
+  .letter-preview h2 { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 16px; }
+  .letter-preview p { margin-bottom: 12px; }
+  .tier-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .tier-card:hover { transform: translateY(-4px); }
+  .tier-popular { border: 1px solid rgba(249, 115, 22, 0.5); box-shadow: 0 0 40px rgba(249, 115, 22, 0.12); }
+  .hidden-initially { opacity: 0; }
+  .slide-up { transition: opacity 0.8s ease; }
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
+</style>
+</head>
+<body class="bg-ink-950 text-ink-200 antialiased">
+
+<!-- Nav -->
+<nav class="fixed top-0 inset-x-0 z-50 glass border-b border-ink-800/50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="offsetcheck-logo-horizontal-white.svg" alt="Offsetcheck" class="h-7 w-auto">
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm transition-colors">
+      <a href="index.html#how-it-works" class="text-ink-400 hover:text-white transition-colors">How it works</a>
+      <a href="check.html" class="text-ink-400 hover:text-white transition-colors">The check</a>
+      <a href="news.html" class="text-white transition-colors">In the news</a>
+      <a href="index.html#pricing" class="text-ink-400 hover:text-white transition-colors">Pricing</a>
+      <a href="contact.html" class="text-ink-400 hover:text-white transition-colors">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="themeToggle" class="w-9 h-9 rounded-lg bg-ink-900 border border-ink-800 flex items-center justify-center text-ink-400 hover:text-white transition-colors" title="Toggle theme">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      </button>
+      <a href="check.html" class="hidden sm:inline-flex px-5 py-2.5 bg-gradient-to-br from-brand-400 to-brand-500 hover:from-brand-300 hover:to-brand-400 text-ink-950 text-sm font-semibold rounded-xl transition-all">Check my offset</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<section class="pt-32 pb-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto text-center">
+    <div class="slide-up hidden-initially">
+      <p class="mono text-brand-400 text-xs tracking-widest mb-4">IN THE NEWS</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight">Why we built <span class="gradient-text">Offsetcheck</span></h1>
+      <p class="text-lg text-ink-400 max-w-3xl mx-auto leading-relaxed">On 29 July 2026, ASIC published the findings of its review into mortgage offset accounts — and ABC News told the story of the borrowers behind the numbers. That reporting is the reason this site exists. Below: what the regulator found, the coverage worth reading, and resources to check your own offset.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Key Figures -->
+<section class="pb-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="reveal glass rounded-2xl p-6">
+        <p class="mono text-3xl font-bold gradient-text mb-2">$55M+</p>
+        <p class="text-xs text-ink-500 leading-relaxed">Compensation paid by banks for offset failures, Sep 2023 – Aug 2025</p>
+        <p class="mono text-[10px] text-ink-600 mt-3 tracking-wider">SOURCE: ASIC 26-173MR</p>
+      </div>
+      <div class="reveal glass rounded-2xl p-6" style="transition-delay:.1s">
+        <p class="mono text-3xl font-bold text-white mb-2">8 banks</p>
+        <p class="text-xs text-ink-500 leading-relaxed">Reviewed — more than 70% of Australia's $2.5 trillion home-loan market</p>
+        <p class="mono text-[10px] text-ink-600 mt-3 tracking-wider">SOURCE: ASIC 26-173MR</p>
+      </div>
+      <div class="reveal glass rounded-2xl p-6" style="transition-delay:.2s">
+        <p class="mono text-3xl font-bold text-white mb-2">$349.1B</p>
+        <p class="text-xs text-ink-500 leading-relaxed">Held in offset accounts as of March 2026 — up 28% in two years</p>
+        <p class="mono text-[10px] text-ink-600 mt-3 tracking-wider">SOURCE: ASIC REP 837</p>
+      </div>
+      <div class="reveal glass rounded-2xl p-6" style="transition-delay:.3s">
+        <p class="mono text-3xl font-bold text-white mb-2">204,000</p>
+        <p class="text-xs text-ink-500 leading-relaxed">Unique home loans examined in the review's data request</p>
+        <p class="mono text-[10px] text-ink-600 mt-3 tracking-wider">SOURCE: ASIC REP 837</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Stories -->
+<section class="pb-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 reveal">The two pieces that started this</h2>
+    <div class="grid lg:grid-cols-2 gap-6">
+      <article class="reveal glass rounded-2xl p-8 glow flex flex-col">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="mono text-[11px] font-bold tracking-wider px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/30">ASIC · MEDIA RELEASE</span>
+          <span class="mono text-xs text-ink-500">29 JUL 2026</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 leading-snug">Hidden mortgage offset failures costing Australians millions in lost interest savings</h3>
+        <p class="text-ink-400 text-sm leading-relaxed mb-4">The regulator's announcement of review 26-173MR: banks paid over $55 million in compensation for offset failures, and weaknesses were found in how all eight reviewed banks set up, monitored and managed offset accounts.</p>
+        <blockquote class="border-l-2 border-brand-500 pl-4 text-sm text-ink-300 italic mb-6">"When offset accounts don't operate correctly, the harm can be hidden. Loan repayments stay the same, while customers unknowingly pay more interest and take longer to repay their loan."<span class="block mt-2 not-italic text-xs text-ink-500">— Sarah Court, ASIC Chair</span></blockquote>
+        <a href="https://www.asic.gov.au/about-asic/news-centre/find-a-media-release/2026-releases/26-173mr-hidden-mortgage-offset-failures-costing-australians-millions-in-lost-interest-savings" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors">Read the media release
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </article>
+      <article class="reveal glass rounded-2xl p-8 glow flex flex-col" style="transition-delay:.15s">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="mono text-[11px] font-bold tracking-wider px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/30">ABC NEWS</span>
+          <span class="mono text-xs text-ink-500">29 JUL 2026</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 leading-snug">Mortgage borrowers miss out on millions in offset savings due to bank failures, ASIC finds</h3>
+        <p class="text-ink-400 text-sm leading-relaxed mb-4">The human side of the report. Brisbane homeowner Brooke discovered — only while refinancing — that her offset had been linked to the wrong loan, then fallen off entirely. The bank offered more than $5,000 in compensation, but she had no way to verify the figure.</p>
+        <blockquote class="border-l-2 border-brand-500 pl-4 text-sm text-ink-300 italic mb-6">"We had no idea how much money we were actually out of pocket."<span class="block mt-2 not-italic text-xs text-ink-500">— Brooke, offset account holder</span></blockquote>
+        <a href="https://www.abc.net.au/news/2026-07-29/home-loan-borrowers-miss-out-on-millions-in-offset-savings-asic/106965180" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors">Read the article
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </article>
+    </div>
+    <p class="text-sm text-ink-400 mt-8 reveal leading-relaxed">Brooke's story is the precise problem Offsetcheck solves: <span class="text-white">never accept a compensation figure you cannot check.</span> Upload your statements, re-calculate the daily offset benefit yourself, and compare it against what the bank actually gave you.</p>
+  </div>
+</section>
+
+<!-- What ASIC Found -->
+<section class="pb-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal glass rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-white mb-2">How offsets fail</h2>
+      <p class="text-sm text-ink-500 mb-8">Failure types identified by the banks in their own data responses to ASIC (REP 837).</p>
+      <div class="space-y-5">
+        <div>
+          <div class="flex items-center justify-between mb-2"><span class="text-sm text-ink-300">Offset account opened but never linked to the loan</span><span class="mono text-sm font-bold text-white">55%</span></div>
+          <div class="coverage-track"><div class="coverage-fill" style="width:55%"></div></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2"><span class="text-sm text-ink-300">Offset account never opened at all</span><span class="mono text-sm font-bold text-white">22%</span></div>
+          <div class="coverage-track"><div class="coverage-fill" style="width:22%"></div></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2"><span class="text-sm text-ink-300">Linked later than the timeframe promised to the customer</span><span class="mono text-sm font-bold text-white">14%</span></div>
+          <div class="coverage-track"><div class="coverage-fill" style="width:14%"></div></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2"><span class="text-sm text-ink-300">Other failures</span><span class="mono text-sm font-bold text-white">9%</span></div>
+          <div class="coverage-track"><div class="coverage-fill" style="width:9%"></div></div>
+        </div>
+      </div>
+      <p class="text-xs text-ink-600 mt-8 leading-relaxed">Earlier remediation tells the same story: Bankwest refunded about 10,800 customers $4.9 million in 2017, NAB refunded $1.7 million to 966 customers the same year, and in 2022 the Federal Court ordered ANZ to pay a $25 million penalty over unattached offset benefits. This is not a new problem — it is a newly measured one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Resources & References -->
+<section class="pb-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-end justify-between mb-8 reveal">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Resources and references</h2>
+        <p class="text-ink-400">The reporting, the research, and the official guides. Everything below is external and independent of Offsetcheck.</p>
+      </div>
+    </div>
+    <div id="resourceList" class="space-y-3"></div>
+    <div class="flex items-center justify-between mt-8">
+      <p class="mono text-xs text-ink-500" id="pageStatus"></p>
+      <div class="flex items-center gap-2" id="paginationControls"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pb-24 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal glass rounded-2xl p-10 text-center glow">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Don't take the bank's word for it</h2>
+      <p class="text-ink-400 max-w-xl mx-auto mb-8">Run your own statements through the check. Two minutes, to the cent, with the working shown.</p>
+      <a href="check.html" class="inline-flex px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold rounded-xl transition-all hover:scale-105 glow">Check my offset</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-ink-800">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="offsetcheck-logo-horizontal-white.svg" alt="Offsetcheck" class="h-8 w-auto">
+      </div>
+      <div class="flex items-center gap-6 text-sm text-ink-500">
+        <a href="#" class="hover:text-white transition-colors">Privacy</a>
+        <a href="#" class="hover:text-white transition-colors">Terms</a>
+        <a href="news.html" class="hover:text-white transition-colors">In the news</a>
+        <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+      </div>
+      <div class="text-center md:text-right">
+        <p class="mono text-sm text-ink-400">Keeping the bankers honest.</p>
+        <p class="text-sm text-ink-600 mt-1">Not legal advice. Calculations are estimates. Consult a professional. Offsetcheck is not affiliated with any bank or lending institution. We are an independent service.</p>
+        <p class="mono text-xs text-ink-600 mt-2 tracking-wider">© 2026 OFFSETCHECK · OFFSETCHECK.COM</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============ SCROLL REVEAL ============
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
+  })
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ============ THEME TOGGLE ============
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+  document.documentElement.classList.toggle('light')
+});
+// ============ INIT ============
+document.querySelectorAll('.slide-up').forEach(el => {
+  setTimeout(() => el.classList.remove('hidden-initially'), 100)
+});
+</script>
+<script>
+// ============ RESOURCES & PAGINATION ============
+const RESOURCES = [
+  { outlet: 'ASIC', kind: 'Media release', date: '29 JUL 2026', title: '26-173MR — Hidden mortgage offset failures costing Australians millions in lost interest savings', url: 'https://www.asic.gov.au/about-asic/news-centre/find-a-media-release/2026-releases/26-173mr-hidden-mortgage-offset-failures-costing-australians-millions-in-lost-interest-savings', note: 'The regulator\u2019s announcement of its eight-bank review and the $55M+ compensation figure.' },
+  { outlet: 'ASIC', kind: 'Full report', date: '29 JUL 2026', title: 'REP 837 — Offsets, out of mind: Banks fall short on mortgage offset account promises', url: 'https://download.asic.gov.au/media/piwpapu5/rep837-published-29-july-2026.pdf', note: 'The complete review: methodology, case studies, and what ASIC expects banks to fix.' },
+  { outlet: 'ABC News', kind: 'Article', date: '29 JUL 2026', title: 'Mortgage borrowers miss out on millions in offset savings due to bank failures, ASIC finds', url: 'https://www.abc.net.au/news/2026-07-29/home-loan-borrowers-miss-out-on-millions-in-offset-savings-asic/106965180', note: 'The story that started it — including Brooke, whose offset was linked to the wrong loan.' },
+  { outlet: 'ABC — The Business', kind: 'Video', date: '29 JUL 2026', title: 'Home loan borrowers miss out on millions in offset interest savings, ASIC finds', url: 'https://www.youtube.com/watch?v=n0dtXw5qW28', note: 'Television coverage with ASIC, the Australian Banking Association and Canstar.' },
+  { outlet: 'Nine News', kind: 'Article', date: '29 JUL 2026', title: 'Australians losing out on millions in offset savings due to bank errors', url: 'https://www.nine.com.au/australia-news/australians-losing-out-on-millions-in-offset-savings-due-to-bank-errors-20260729-p60jho.html', note: 'Includes a worked example for estimating your own expected daily interest.' },
+  { outlet: 'The Conversation', kind: 'Explainer', date: '29 JUL 2026', title: 'How can I check my offset account is collecting the savings it should?', url: 'https://theconversation.com/how-can-i-check-my-offset-account-is-collecting-the-savings-it-should-288594', note: 'Academic perspective: who actually benefits from an offset, and when fees outweigh savings.' },
+  { outlet: 'Moneysmart (ASIC)', kind: 'Guide', date: 'UPDATED 28 JUL 2026', title: 'Mortgage offset accounts — how they work and how to check yours is linked', url: 'https://moneysmart.gov.au/home-loans/mortgage-offset-accounts', note: 'The government\u2019s plain-English guide, updated with the ASIC review\u2019s findings.' }
+];
+const PER_PAGE = 5;
+let currentPage = 1;
+
+function renderResources() {
+  const list = document.getElementById('resourceList');
+  const totalPages = Math.ceil(RESOURCES.length / PER_PAGE);
+  const start = (currentPage - 1) * PER_PAGE;
+  const pageItems = RESOURCES.slice(start, start + PER_PAGE);
+  list.innerHTML = pageItems.map(r => `
+    <a href="${r.url}" target="_blank" rel="noopener" class="block glass rounded-2xl p-6 hover:border-brand-500/40 transition-colors group">
+      <div class="flex flex-wrap items-center gap-3 mb-2">
+        <span class="mono text-[11px] font-bold tracking-wider px-3 py-1 rounded-full bg-ink-800 text-brand-400 border border-ink-700">${r.outlet.toUpperCase()} · ${r.kind.toUpperCase()}</span>
+        <span class="mono text-xs text-ink-500">${r.date}</span>
+      </div>
+      <h3 class="text-base font-bold text-white group-hover:text-brand-300 transition-colors mb-1 leading-snug">${r.title}</h3>
+      <p class="text-sm text-ink-500">${r.note}</p>
+    </a>`).join('');
+  document.getElementById('pageStatus').textContent = `PAGE ${currentPage} OF ${totalPages} · ${RESOURCES.length} REFERENCES`;
+  const ctrl = document.getElementById('paginationControls');
+  let btns = `<button data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''} class="page-btn px-3 py-1.5 rounded-lg text-sm border border-ink-700 text-ink-300 hover:text-white hover:border-brand-500 transition-colors disabled:opacity-30 disabled:pointer-events-none">&larr;</button>`;
+  for (let p = 1; p <= totalPages; p++) {
+    btns += `<button data-page="${p}" class="page-btn mono w-9 h-9 rounded-lg text-sm border transition-colors ${p === currentPage ? 'bg-brand-500 text-ink-950 border-brand-500 font-bold' : 'border-ink-700 text-ink-300 hover:text-white hover:border-brand-500'}">${p}</button>`;
+  }
+  btns += `<button data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''} class="page-btn px-3 py-1.5 rounded-lg text-sm border border-ink-700 text-ink-300 hover:text-white hover:border-brand-500 transition-colors disabled:opacity-30 disabled:pointer-events-none">&rarr;</button>`;
+  ctrl.innerHTML = btns;
+  ctrl.querySelectorAll('.page-btn').forEach(b => b.addEventListener('click', () => {
+    currentPage = parseInt(b.dataset.page);
+    renderResources();
+    document.getElementById('resourceList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+}
+renderResources();
+</script>
+</body>
+</html>
