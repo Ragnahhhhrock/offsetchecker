@@ -200,9 +200,9 @@ tailwind.config = {
             <svg class="w-8 h-8 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
           </div>
           <p class="text-lg font-semibold text-white mb-2">Drop your statements here</p>
-          <p class="text-ink-500 text-sm mb-4">or click to browse. CSV, XLSX, PDF, PNG, JPG accepted.</p>
-          <p class="text-ink-600 text-xs">Free tier: up to 3 statements. <a href="#pricing" class="text-brand-400 hover:underline">Upgrade for more</a>.</p>
-          <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.pdf,.png,.jpg,.jpeg,.txt" multiple>
+          <p class="text-ink-500 text-sm mb-4">or click to browse. CSV, XLSX, PDF, TXT, MD, PNG, JPG accepted — bulk batches welcome.</p>
+          <p class="text-ink-600 text-xs">Free tier: up to 250 statements during beta. <a href="#pricing" class="text-brand-400 hover:underline">Upgrade for more</a>.</p>
+          <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.pdf,.png,.jpg,.jpeg,.txt,.md" multiple>
         </div>
         <div id="uploadProgress" class="hidden mt-6">
           <div class="flex items-center justify-between mb-2">
@@ -763,25 +763,63 @@ dropZone.addEventListener('drop', e => {
 });
 fileInput.addEventListener('change', e => handleFiles(e.target.files));
 
+// Raised from 3 to 250 for bulk testing — dial back before charging real users.
+const FREE_TIER_LIMIT = 250;
+const seenFiles = new Set();
+let ingestQueue = Promise.resolve();
+
+function updateIngestProgress(done, total, currentName) {
+  const wrap = $('#uploadProgress');
+  wrap.classList.remove('hidden');
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  $('#progressFill').style.width = pct + '%';
+  $('#uploadPercent').textContent = pct + '%';
+  $('#uploadStatus').textContent = done < total ? 'Processing ' + (done + 1) + ' of ' + total + ' — ' + currentName : 'Ingestion complete';
+}
+
 function handleFiles(files) {
   if (!files.length) return;
-  const validExts = ['csv', 'xlsx', 'xls', 'pdf', 'png', 'jpg', 'jpeg', 'txt'];
-  const maxFree = 3;
-  if (state.tier === 'free' && state.statementsProcessed + files.length > maxFree) {
-    showToast('Free tier limited to 3 statements. Upgrade to Pro.', 'error');
-    return
-  }
+  const validExts = ['csv', 'xlsx', 'xls', 'pdf', 'png', 'jpg', 'jpeg', 'txt', 'md'];
+  const batch = [];
   Array.from(files).forEach(file => {
     const ext = file.name.split('.').pop().toLowerCase();
+    const key = file.name + ':' + file.size;
     if (!validExts.includes(ext)) {
       showToast('Unsupported file: ' + file.name, 'error');
       return
     }
-    processFile(file, ext)
+    if (seenFiles.has(key)) return; // same file dropped twice — skip silently
+    seenFiles.add(key);
+    batch.push({ file, ext })
+  });
+  if (!batch.length) return;
+  if (state.tier === 'free' && state.statementsProcessed + batch.length > FREE_TIER_LIMIT) {
+    showToast('Free tier limited to ' + FREE_TIER_LIMIT + ' statements. Upgrade to Pro.', 'error');
+    return
+  }
+  const txBefore = state.transactions.length;
+  const total = batch.length;
+  let done = 0;
+  // Sequential queue: one statement at a time so a large batch of PDFs
+  // does not parse concurrently and freeze the tab.
+  batch.forEach(({ file, ext }) => {
+    ingestQueue = ingestQueue.then(() => {
+      updateIngestProgress(done, total, file.name);
+      return processFile(file, ext).then(() => {
+        done++;
+        updateIngestProgress(done, total, file.name)
+      })
+    })
+  });
+  ingestQueue = ingestQueue.then(() => {
+    const extracted = state.transactions.length - txBefore;
+    showToast('Ingested ' + total + (total === 1 ? ' statement' : ' statements') + ' — ' + extracted + ' transactions extracted', 'success');
+    setTimeout(() => $('#uploadProgress').classList.add('hidden'), 3000)
   })
 }
 
 function processFile(file, ext) {
+  // Always returns a Promise so handleFiles can ingest large batches one file at a time.
   const list = $('#fileList');
   list.classList.remove('hidden');
   const row = document.createElement('div');
@@ -794,7 +832,8 @@ function processFile(file, ext) {
     png: 'img',
     jpg: 'img',
     jpeg: 'img',
-    txt: 'txt'
+    txt: 'txt',
+    md: 'txt'
   } [ext] || 'txt');
   row.innerHTML = '<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-ink-800 flex items-center justify-center"><svg class="w-4 h-4 text-ink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div><div><p class="text-sm font-medium text-white">' + file.name + '</p><p class="text-xs text-ink-500">' + (file.size / 1024).toFixed(1) + ' KB</p></div></div><span class="file-type-badge ' + badgeClass + '">' + ext.toUpperCase() + '</span>';
   list.appendChild(row);
@@ -805,24 +844,29 @@ function processFile(file, ext) {
   });
   state.statementsProcessed++;
   if (ext === 'csv') {
-    parseCSV(file)
+    return parseCSV(file)
   } else if (ext === 'xlsx' || ext === 'xls') {
-    parseExcel(file)
+    return parseExcel(file)
   } else if (ext === 'pdf') {
-    parsePDF(file)
+    return parsePDF(file)
   } else if (['png', 'jpg', 'jpeg'].includes(ext)) {
-    parseImage(file)
-  } else if (ext === 'txt') {
-    parseText(file)
+    return parseImage(file)
+  } else if (ext === 'txt' || ext === 'md') {
+    return parseText(file)
   }
+  return Promise.resolve()
 }
 
 function parseCSV(file) {
-  const reader = new FileReader();
-  reader.onload = e => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
     const text = e.target.result;
     const lines = text.split(/[\r\n]+/).filter(l => l.trim());
-    if (lines.length < 2) return;
+    if (lines.length < 2) {
+      resolve();
+      return
+    }
     const headers = lines[0].toLowerCase().split(',').map(h => h.trim().replace(/^[''']|[''']$/g, ''));
     const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('day'));
     const descIdx = headers.findIndex(h => h.includes('desc') || h.includes('narr') || h.includes('detail'));
@@ -844,21 +888,24 @@ function parseCSV(file) {
           amount = Math.abs(amount)
         }
       }
-      state.transactions.push({
+      if (date) state.transactions.push({
         date,
         desc,
         amount: Math.abs(amount),
         type
       })
     }
-    showToast('Parsed ' + state.transactions.length + ' transactions from CSV', 'success')
+    resolve()
   };
-  reader.readAsText(file)
+    reader.onerror = () => resolve();
+    reader.readAsText(file)
+  })
 }
 
 function parseExcel(file) {
-  const reader = new FileReader();
-  reader.onload = e => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
     const data = new Uint8Array(e.target.result);
     const workbook = XLSX.read(data, {
       type: 'array'
@@ -867,7 +914,10 @@ function parseExcel(file) {
     const json = XLSX.utils.sheet_to_json(sheet, {
       header: 1
     });
-    if (json.length < 2) return;
+    if (json.length < 2) {
+      resolve();
+      return
+    }
     const headers = json[0].map(h => String(h).toLowerCase().trim());
     const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('day'));
     const descIdx = headers.findIndex(h => h.includes('desc') || h.includes('narr') || h.includes('detail'));
@@ -894,9 +944,11 @@ function parseExcel(file) {
         type
       })
     }
-    showToast('Parsed ' + state.transactions.length + ' transactions from Excel', 'success')
+    resolve()
   };
-  reader.readAsArrayBuffer(file)
+    reader.onerror = () => resolve();
+    reader.readAsArrayBuffer(file)
+  })
 }
 async function parsePDF(file) {
   try {
@@ -905,45 +957,68 @@ async function parsePDF(file) {
       data: arrayBuffer
     }).promise;
     let fullText = '';
+    let emptyPages = 0;
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const content = await page.getTextContent();
-      fullText += content.items.map(it => it.str).join(' ') + ' '
+      if (!content.items.length) {
+        emptyPages++;
+        continue
+      }
+      // Reconstruct visual lines: pdf.js returns text fragments, not rows.
+      // Group fragments by their y coordinate, then sort left-to-right so each
+      // statement row becomes one line for the transaction extractor.
+      const rows = {};
+      content.items.forEach(it => {
+        if (!it.str.trim()) return;
+        const y = Math.round(it.transform[5]);
+        (rows[y] = rows[y] || []).push({ x: it.transform[4], str: it.str })
+      });
+      const pageText = Object.keys(rows).map(Number).sort((a, b) => b - a)
+        .map(y => rows[y].sort((a, b) => a.x - b.x).map(c => c.str).join(' '))
+        .join('\n');
+      fullText += pageText + '\n'
+    }
+    if (emptyPages === pdf.numPages) {
+      showToast(file.name + ' appears to be a scanned image — no text layer. Export to CSV from online banking for best results.', 'error');
+      return
     }
     extractTransactionsFromText(fullText);
-    showToast('Parsed PDF statement', 'success')
+    if (emptyPages > 0) showToast(file.name + ': ' + emptyPages + ' of ' + pdf.numPages + ' pages had no text layer (skipped)', 'info')
   } catch (err) {
-    showToast('Could not parse PDF: ' + err.message, 'error')
+    showToast('Could not parse ' + file.name + ': ' + err.message, 'error')
   }
 }
 
 function parseImage(file) {
-  showToast('Image OCR requires Pro tier. Please upgrade or use CSV/Excel.', 'info');
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      showToast('Image loaded. Manual entry recommended for image statements.', 'info')
-    };
-    img.src = e.target.result
-  };
-  reader.readAsDataURL(file)
+  showToast(file.name + ': image OCR requires Pro tier. Export to CSV from online banking for best results.', 'info');
+  return Promise.resolve()
 }
 
 function parseText(file) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    extractTransactionsFromText(e.target.result);
-    showToast('Parsed text file', 'success')
-  };
-  reader.readAsText(file)
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      extractTransactionsFromText(e.target.result);
+      resolve()
+    };
+    reader.onerror = () => resolve();
+    reader.readAsText(file)
+  })
 }
+
+// Tracks date+amount+desc so re-uploading the same statement period does
+// not double-count transactions.
+const seenTransactions = new Set();
 
 function extractTransactionsFromText(text) {
   const lines = text.split(/[\r\n]+/).filter(l => l.trim());
   const datePattern = /(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})/g;
   const amountPattern = /\$?\s*(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+(?:\.\d{2})?)\s*(CR|DR|Cr|Dr|cr|dr|CREDIT|DEBIT|credit|debit)?/g;
+  let extracted = 0;
   lines.forEach(line => {
+    datePattern.lastIndex = 0;
+    amountPattern.lastIndex = 0;
     let date = null;
     let m;
     while ((m = datePattern.exec(line)) !== null) {
@@ -957,29 +1032,31 @@ function extractTransactionsFromText(text) {
     const amounts = [];
     while ((m = amountPattern.exec(line)) !== null) {
       const val = parseFloat(m[1].replace(/,/g, ''));
+      if (!isFinite(val) || val === 0) continue;
       const t = (m[2] || '').toUpperCase();
+      const marked = t.includes('DR') || t.includes('DEBIT') || t.includes('CR') || t.includes('CREDIT');
       const type = t.includes('DR') || t.includes('DEBIT') ? 'debit' : 'credit';
-      amounts.push({
-        val,
-        type
-      })
+      amounts.push({ val, type, marked })
     }
-    if (amounts.length > 0) {
-      const largest = amounts.reduce((a, b) => a.val > b.val ? a : b);
-      let desc = line.replace(datePattern, ' ').replace(amountPattern, ' ').replace(/\s+/g, ' ').trim();
-      if (!desc) desc = 'Transaction';
-      if (desc.length > 60) desc = desc.slice(0, 60);
-      state.transactions.push({
-        date,
-        desc,
-        amount: largest.val,
-        type: largest.type
-      })
-    }
-  });
-  if (state.transactions.length > 0) {
-    showToast('Extracted ' + state.transactions.length + ' transactions from text', 'success')
-  }
+    if (!amounts.length) return;
+    // Pick the transaction amount, not the running balance: an explicit
+    // DR/CR marker wins; otherwise the first amount on the row, since
+    // statement columns are ordered amount-then-balance.
+    const picked = amounts.find(a => a.marked) || amounts[0];
+    let desc = line.replace(datePattern, ' ').replace(amountPattern, ' ').replace(/\s+/g, ' ').trim();
+    if (!desc) desc = 'Transaction';
+    if (desc.length > 60) desc = desc.slice(0, 60);
+    const key = date + '|' + picked.val.toFixed(2) + '|' + desc.toLowerCase();
+    if (seenTransactions.has(key)) return;
+    seenTransactions.add(key);
+    state.transactions.push({
+      date,
+      desc,
+      amount: picked.val,
+      type: picked.type
+    });
+    extracted++
+  })
 } // ============ MANUAL ENTRY ============
 $('#addTxRow').addEventListener('click', () => {
   const tbody = $('#manualTxTable');
